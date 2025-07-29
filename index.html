@@ -25,9 +25,9 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        /* Gradient animations */
+        /* Gradient animations - Updated to match brand colors */
         .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f0c419 0%, #7cb342 100%);
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
         }
@@ -38,16 +38,16 @@
             100% { background-position: 0% 50%; }
         }
         
-        /* Button animations */
+        /* Button animations - Updated to match brand */
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f0c419 0%, #8bc34a 100%);
             transform: translateY(0);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 15px rgba(240, 196, 25, 0.4);
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 7px 20px rgba(240, 196, 25, 0.5);
         }
         
         .btn-primary:active {
@@ -92,8 +92,8 @@
         }
         
         .repair-card.selected {
-            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
-            border-color: #6366f1;
+            background: linear-gradient(135deg, #fff8e1 0%, #f0f4c3 100%);
+            border-color: #8bc34a;
             transform: scale(1.02);
         }
         
@@ -115,9 +115,9 @@
         }
         
         .modern-input:focus {
-            border-color: #6366f1;
+            border-color: #8bc34a;
             background: white;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.1);
         }
         
         /* Success animation */
@@ -178,22 +178,21 @@
 <body class="bg-gray-50">
     <!-- Animated background -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div class="absolute top-40 left-40 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div class="absolute top-40 left-40 w-80 h-80 bg-lime-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
     </div>
 
     <div id="app" class="relative min-h-screen p-4">
         <div class="max-w-7xl mx-auto">
             <!-- Modern Header -->
             <div class="text-center mb-10 relative">
-                <div class="inline-block mb-4">
-                    <div class="gradient-bg text-white p-4 rounded-2xl shadow-2xl float">
-                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 7a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1zm1 4a1 1 0 110-2 1 1 0 010 2zm0 4a1 1 0 110-2 1 1 0 010 2z"/>
-                        </svg>
-                    </div>
+                <!-- Logo Section -->
+                <div class="mb-6">
+                    <img src="logo.png" alt="Proverbs 31 LandSphere" class="h-24 mx-auto mb-4 drop-shadow-xl">
+                    <p class="text-lg text-gray-600 font-medium">Real Estate Investment Solutions</p>
                 </div>
+                
                 <h1 class="text-5xl font-800 text-gray-900 mb-3 tracking-tight">
                     Deal Analyzer <span class="text-transparent bg-clip-text gradient-bg">Pro</span>
                 </h1>
@@ -227,14 +226,14 @@
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Property Address</label>
                                 <input type="text" id="address" placeholder="123 Main St, City, State" 
-                                       class="modern-input w-full p-4 rounded-xl focus:outline-none">
+                                       class="modern-input w-full p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500">
                             </div>
                             
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Square Footage</label>
                                 <div class="relative">
                                     <input type="number" id="sqft" placeholder="2,000" 
-                                           class="modern-input w-full p-4 rounded-xl focus:outline-none pr-16"
+                                           class="modern-input w-full p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 pr-16"
                                            onchange="calculateDeal()">
                                     <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">sq ft</span>
                                 </div>
@@ -245,7 +244,7 @@
                                 <div class="relative">
                                     <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">$</span>
                                     <input type="number" id="arv" placeholder="400,000" 
-                                           class="modern-input w-full p-4 pl-8 rounded-xl focus:outline-none"
+                                           class="modern-input w-full p-4 pl-8 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
                                            onchange="calculateDeal()">
                                 </div>
                             </div>
@@ -256,8 +255,8 @@
                                     <input type="range" id="targetPercent" value="70" min="50" max="85" 
                                            class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                                            oninput="updateTargetPercent(this.value)"
-                                           style="background: linear-gradient(to right, #6366f1 0%, #6366f1 50%, #e5e7eb 50%, #e5e7eb 100%);">
-                                    <span id="targetPercentDisplay" class="text-2xl font-bold text-indigo-600 w-16 text-right">70%</span>
+                                           style="background: linear-gradient(to right, #8bc34a 0%, #8bc34a 50%, #e5e7eb 50%, #e5e7eb 100%);">
+                                    <span id="targetPercentDisplay" class="text-2xl font-bold text-green-600 w-16 text-right">70%</span>
                                 </div>
                             </div>
                             
@@ -350,9 +349,18 @@
                             <!-- Cost breakdown will be populated here -->
                         </div>
                         
-                        <button onclick="resetAnalysis()" class="mt-6 w-full py-3 bg-gray-200 hover:bg-gray-300 rounded-xl font-semibold text-gray-700">
-                            Analyze Another Deal
-                        </button>
+                        <div class="mt-6 space-y-3">
+                            <button onclick="emailResults()" class="btn-primary w-full py-3 rounded-xl text-white font-semibold flex items-center justify-center">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                </svg>
+                                Email Results to Team
+                            </button>
+                            <button onclick="resetAnalysis()" class="w-full py-3 bg-gray-200 hover:bg-gray-300 rounded-xl font-semibold text-gray-700">
+                                Analyze Another Deal
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -408,7 +416,7 @@
                                 <h3 class="font-bold text-gray-900 text-lg">${repair.name}</h3>
                                 <p class="text-sm text-gray-600 mt-1">${repair.description}</p>
                                 <div class="mt-3 flex items-center">
-                                    <span class="text-sm font-bold text-indigo-600">$${repair.min.toLocaleString()} - $${repair.max.toLocaleString()}</span>
+                                    <span class="text-sm font-bold text-green-600">${repair.min.toLocaleString()} - ${repair.max.toLocaleString()}</span>
                                     <span class="ml-3 text-xs text-gray-500">Avg: $${((repair.min + repair.max) / 2).toLocaleString()}</span>
                                 </div>
                             </div>
@@ -457,7 +465,7 @@
         function updateTargetPercent(value) {
             document.getElementById('targetPercentDisplay').textContent = value + '%';
             document.getElementById('targetPercent').style.background = 
-                `linear-gradient(to right, #6366f1 0%, #6366f1 ${(value-50)*2.85}%, #e5e7eb ${(value-50)*2.85}%, #e5e7eb 100%)`;
+                `linear-gradient(to right, #8bc34a 0%, #8bc34a ${(value-50)*2.85}%, #e5e7eb ${(value-50)*2.85}%, #e5e7eb 100%)`;
             
             if (document.getElementById('arv').value && document.getElementById('sqft').value) {
                 calculateDeal();
@@ -595,6 +603,72 @@
             updateRepairTotal();
             document.getElementById('analysisCard').style.display = 'block';
             document.getElementById('resultsCard').style.display = 'none';
+        }
+
+        function emailResults() {
+            // Get all the values
+            const address = document.getElementById('address').value || 'Property Address Not Specified';
+            const sqft = document.getElementById('sqft').value;
+            const arv = document.getElementById('arv').value;
+            const targetPercent = document.getElementById('targetPercent').value;
+            
+            // Get calculated values
+            const maxOffer = document.getElementById('maxOffer').textContent;
+            const profit = document.getElementById('profit').textContent;
+            const margin = document.getElementById('margin').textContent;
+            const totalInvestment = document.getElementById('totalInvestment').textContent;
+            const dealQuality = document.getElementById('dealQuality').textContent;
+            
+            // Get selected repairs
+            const selectedRepairDetails = selectedRepairs.map(repairId => {
+                const repair = repairOptions.find(r => r.id === repairId);
+                return `${repair.name}: ${repair.min.toLocaleString()} - ${repair.max.toLocaleString()}`;
+            }).join('\n');
+            
+            const totalRepairCost = document.getElementById('repairTotal').textContent;
+            
+            // Compose email
+            const subject = `Deal Analysis: ${address} - ${dealQuality}`;
+            const body = `Deal Analysis Report
+Generated by Proverbs 31 LandSphere Deal Analyzer
+
+PROPERTY DETAILS:
+📍 Address: ${address}
+📐 Square Footage: ${sqft} sq ft
+💰 After Repair Value (ARV): ${parseInt(arv).toLocaleString()}
+🎯 Target Purchase: ${targetPercent}% of ARV
+
+DEAL ANALYSIS:
+${dealQuality}
+
+💵 Maximum Allowable Offer: ${maxOffer}
+💰 Projected Profit: ${profit}
+📊 Profit Margin: ${margin}
+💸 Total Investment: ${totalInvestment}
+
+REPAIR ESTIMATES:
+Total Repair Cost: ${totalRepairCost}
+
+Selected Repairs:
+${selectedRepairDetails || 'No repairs selected'}
+
+COST BREAKDOWN:
+- Estimated ARV: ${parseInt(arv).toLocaleString()}
+- Purchase Target (${targetPercent}%): ${(arv * targetPercent / 100).toLocaleString()}
+- Repair Costs: ${totalRepairCost}
+- Closing Costs (3%): ${(arv * 0.03).toLocaleString()}
+- Hard Money Interest (6 months): ${(arv * 0.06).toLocaleString()}
+
+---
+This analysis was generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
+Proverbs 31 LandSphere - Real Estate Investment Solutions`;
+
+            // Create mailto link with multiple recipients
+            const recipients = 'james@proverbs31landsphere.com,lawanda@proverbs31landsphere.com';
+            const mailtoLink = `mailto:${recipients}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
         }
 
         // Initialize the app
