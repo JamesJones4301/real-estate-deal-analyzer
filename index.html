@@ -1,21 +1,604 @@
-<const repairOptions = [
-    { id: 'roof-repair', name: 'Roof Repair', description: 'Minor roof repairs', min: 1000, max: 3000 },
-    { id: 'roof-replacement', name: 'Roof Replacement', description: 'Full roof replacement', min: 6000, max: 10000 },
-    { id: 'electrical-box', name: 'Electrical Box Replace', description: 'Replace electrical panel', min: 5000, max: 8000 },
-    { id: 'gfci', name: 'GFCI Installation', description: 'Add GFCI outlets where needed', min: 1000, max: 3000 },
-    { id: 'main-drain', name: 'Main Drain Line', description: 'Replace main drain line', min: 8000, max: 15000 },
-    { id: 'exterior-paint', name: 'Exterior Paint', description: 'Paint exterior ($3-4/sqft)', min: 6000, max: 8000 },
-    { id: 'interior-paint', name: 'Interior Paint', description: 'Paint interior ($2-4/sqft)', min: 4000, max: 8000 }, ✓
-    { id: 'siding-wood', name: 'Siding/Wood Rot', description: 'Replace siding or fix wood rot', min: 1000, max: 10000 },
-    { id: 'foundation', name: 'Foundation Repair', description: 'Foundation structural repairs', min: 10000, max: 30000 },
-    { id: 'windows', name: 'Replace Windows', description: 'Replace all windows', min: 8000, max: 20000 },
-    { id: 'driveway', name: 'Driveway', description: 'Driveway repair or replacement', min: 1000, max: 9000 },
-    { id: 'flooring', name: 'Flooring Replacement', description: 'Replace flooring ($3-8/sqft)', min: 6000, max: 16000 }, ✓
-    { id: 'light-fixtures', name: 'Light Fixtures', description: 'Replace light fixtures throughout', min: 500, max: 3000 }, ✓
-    { id: 'plumbing', name: 'Plumbing Work', description: 'Major plumbing repairs/replacement', min: 2000, max: 15000 }, ✓
-    { id: 'toilet-replacement', name: 'Toilet Replacement', description: 'Replace toilets ($300-800 each)', min: 600, max: 2400 }, ✓
-    { id: 'drywall', name: 'Drywall Work', description: 'Drywall repair/replacement ($1-3/sqft)', min: 2000, max: 6000 }, ✓
-    { id: 'patch-paint', name: 'Patch and Paint', description: 'Minor patching and touch-up paint', min: 1000, max: 4000 }, ✓
-    { id: 'ac-replacement', name: 'AC Replacement', description: 'HVAC system replacement', min: 3000, max: 8000 }, ✓
-    { id: 'water-heater', name: 'Hot Water Heater', description: 'Water heater replacement', min: 800, max: 2500 } ✓
-];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Deal Analyzer Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Smooth animations */
+        * { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Glassmorphism effects */
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Gradient animations */
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Button animations */
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        /* Card hover effects */
+        .card-hover {
+            transform: translateY(0);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Repair option cards */
+        .repair-card {
+            position: relative;
+            overflow: hidden;
+            transform: scale(1);
+        }
+        
+        .repair-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .repair-card:hover::before {
+            left: 100%;
+        }
+        
+        .repair-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .repair-card.selected {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            border-color: #6366f1;
+            transform: scale(1.02);
+        }
+        
+        /* Floating animation */
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Input focus effects */
+        .modern-input {
+            border: 2px solid #e5e7eb;
+            background: #f9fafb;
+            position: relative;
+        }
+        
+        .modern-input:focus {
+            border-color: #6366f1;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        /* Success animation */
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .success-pulse {
+            animation: successPulse 0.5s ease-in-out;
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2937;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 10;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Loading states */
+        .shimmer {
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Number ticker animation */
+        .ticker {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Animated background -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div class="absolute top-40 left-40 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <div id="app" class="relative min-h-screen p-4">
+        <div class="max-w-7xl mx-auto">
+            <!-- Modern Header -->
+            <div class="text-center mb-10 relative">
+                <div class="inline-block mb-4">
+                    <div class="gradient-bg text-white p-4 rounded-2xl shadow-2xl float">
+                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 7a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1zm1 4a1 1 0 110-2 1 1 0 010 2zm0 4a1 1 0 110-2 1 1 0 010 2z"/>
+                        </svg>
+                    </div>
+                </div>
+                <h1 class="text-5xl font-800 text-gray-900 mb-3 tracking-tight">
+                    Deal Analyzer <span class="text-transparent bg-clip-text gradient-bg">Pro</span>
+                </h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Instantly analyze real estate deals with AI-powered insights and accurate repair estimates
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Left Column - Property Details -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="glass rounded-3xl shadow-xl p-8 card-hover">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                                <span class="gradient-bg text-white p-2 rounded-xl mr-3">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                                    </svg>
+                                </span>
+                                Property Details
+                            </h2>
+                            <div class="tooltip">
+                                <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="tooltip-text">Enter your property information to calculate deal profitability</span>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Property Address</label>
+                                <input type="text" id="address" placeholder="123 Main St, City, State" 
+                                       class="modern-input w-full p-4 rounded-xl focus:outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Square Footage</label>
+                                <div class="relative">
+                                    <input type="number" id="sqft" placeholder="2,000" 
+                                           class="modern-input w-full p-4 rounded-xl focus:outline-none pr-16"
+                                           onchange="calculateDeal()">
+                                    <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">sq ft</span>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">After Repair Value (ARV)</label>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">$</span>
+                                    <input type="number" id="arv" placeholder="400,000" 
+                                           class="modern-input w-full p-4 pl-8 rounded-xl focus:outline-none"
+                                           onchange="calculateDeal()">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Target Purchase (% of ARV)</label>
+                                <div class="flex items-center space-x-4">
+                                    <input type="range" id="targetPercent" value="70" min="50" max="85" 
+                                           class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                                           oninput="updateTargetPercent(this.value)"
+                                           style="background: linear-gradient(to right, #6366f1 0%, #6366f1 50%, #e5e7eb 50%, #e5e7eb 100%);">
+                                    <span id="targetPercentDisplay" class="text-2xl font-bold text-indigo-600 w-16 text-right">70%</span>
+                                </div>
+                            </div>
+                            
+                            <button onclick="calculateDeal()" class="btn-primary w-full py-4 rounded-xl text-white font-semibold text-lg">
+                                Calculate Deal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle Column - Repair Estimator -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="glass rounded-3xl shadow-xl p-8 max-h-[800px] overflow-y-auto">
+                        <div class="flex items-center justify-between mb-6 sticky top-0 bg-white bg-opacity-95 pb-4">
+                            <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                                <span class="gradient-bg text-white p-2 rounded-xl mr-3">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                                    </svg>
+                                </span>
+                                Repair Costs
+                            </h2>
+                            <div class="bg-gradient-to-r from-green-400 to-green-600 text-white px-5 py-2 rounded-full font-bold shadow-lg">
+                                <span class="text-sm">Total:</span> <span id="repairTotal" class="text-lg ticker">$0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3" id="repairOptions">
+                            <!-- Repair options will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Results -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div id="analysisCard" class="glass rounded-3xl shadow-xl p-12 text-center">
+                        <div class="text-8xl mb-6 float">📊</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Ready to Analyze</h3>
+                        <p class="text-gray-600 text-lg">Enter property details to see if this is a profitable deal</p>
+                    </div>
+                    
+                    <div id="resultsCard" class="glass rounded-3xl shadow-xl p-8" style="display: none;">
+                        <div class="text-center mb-8">
+                            <div id="dealQualityIcon" class="text-6xl mb-4"></div>
+                            <div id="dealQuality" class="text-3xl font-bold mb-2">ANALYZING...</div>
+                            <div id="dealMessage" class="text-gray-600"></div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-8">
+                            <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-5 rounded-2xl transform hover:scale-105">
+                                <div class="text-sm text-blue-600 font-semibold mb-1 flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Max Offer
+                                </div>
+                                <div id="maxOffer" class="text-2xl font-bold text-blue-900 ticker">$0</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-green-50 to-green-100 p-5 rounded-2xl transform hover:scale-105">
+                                <div class="text-sm text-green-600 font-semibold mb-1 flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Profit
+                                </div>
+                                <div id="profit" class="text-2xl font-bold text-green-900 ticker">$0</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-5 rounded-2xl transform hover:scale-105">
+                                <div class="text-sm text-purple-600 font-semibold mb-1 flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                                    </svg>
+                                    Margin
+                                </div>
+                                <div id="margin" class="text-2xl font-bold text-purple-900 ticker">0%</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-5 rounded-2xl transform hover:scale-105">
+                                <div class="text-sm text-gray-600 font-semibold mb-1 flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Total Investment
+                                </div>
+                                <div id="totalInvestment" class="text-2xl font-bold text-gray-900 ticker">$0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3 bg-gray-50 rounded-2xl p-6" id="breakdown">
+                            <!-- Cost breakdown will be populated here -->
+                        </div>
+                        
+                        <button onclick="resetAnalysis()" class="mt-6 w-full py-3 bg-gray-200 hover:bg-gray-300 rounded-xl font-semibold text-gray-700">
+                            Analyze Another Deal
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+    </style>
+
+    <script>
+        const repairOptions = [
+            { id: 'roof-repair', name: 'Roof Repair', description: 'Minor repairs & patches', min: 1000, max: 3000, icon: '🏠' },
+            { id: 'roof-replacement', name: 'New Roof', description: 'Complete replacement', min: 6000, max: 10000, icon: '🏗️' },
+            { id: 'electrical-box', name: 'Electrical Panel', description: 'Upgrade to 200amp', min: 5000, max: 8000, icon: '⚡' },
+            { id: 'gfci', name: 'GFCI Outlets', description: 'Safety compliance', min: 1000, max: 3000, icon: '🔌' },
+            { id: 'main-drain', name: 'Main Drain Line', description: 'Replace sewer line', min: 8000, max: 15000, icon: '🚿' },
+            { id: 'exterior-paint', name: 'Exterior Paint', description: '$3-4 per sq ft', min: 6000, max: 8000, icon: '🎨' },
+            { id: 'interior-paint', name: 'Interior Paint', description: '$2-4 per sq ft', min: 4000, max: 8000, icon: '🖌️' },
+            { id: 'siding-wood', name: 'Siding Repair', description: 'Fix wood rot areas', min: 1000, max: 10000, icon: '🪵' },
+            { id: 'foundation', name: 'Foundation Work', description: 'Structural repairs', min: 10000, max: 30000, icon: '🏛️' },
+            { id: 'windows', name: 'New Windows', description: 'Energy efficient', min: 8000, max: 20000, icon: '🪟' },
+            { id: 'driveway', name: 'Driveway', description: 'Concrete or asphalt', min: 1000, max: 9000, icon: '🚗' },
+            { id: 'flooring', name: 'New Flooring', description: '$3-8 per sq ft', min: 6000, max: 16000, icon: '🏠' },
+            { id: 'light-fixtures', name: 'Light Fixtures', description: 'Modern updates', min: 500, max: 3000, icon: '💡' },
+            { id: 'plumbing', name: 'Plumbing Work', description: 'Major repairs', min: 2000, max: 15000, icon: '🔧' },
+            { id: 'toilet-replacement', name: 'Toilets', description: '$300-800 each', min: 600, max: 2400, icon: '🚽' },
+            { id: 'drywall', name: 'Drywall Work', description: '$1-3 per sq ft', min: 2000, max: 6000, icon: '📐' },
+            { id: 'patch-paint', name: 'Patch & Paint', description: 'Minor touch-ups', min: 1000, max: 4000, icon: '🖍️' },
+            { id: 'ac-replacement', name: 'HVAC System', description: 'New AC unit', min: 3000, max: 8000, icon: '❄️' },
+            { id: 'water-heater', name: 'Water Heater', description: 'Tank or tankless', min: 800, max: 2500, icon: '🔥' }
+        ];
+
+        let selectedRepairs = [];
+
+        function initRepairOptions() {
+            const container = document.getElementById('repairOptions');
+            container.innerHTML = repairOptions.map(repair => `
+                <div class="repair-card glass rounded-2xl p-5 cursor-pointer border-2 border-gray-200 hover:border-indigo-300" 
+                     onclick="toggleRepair('${repair.id}')" id="repair-${repair.id}">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start flex-1">
+                            <div class="text-3xl mr-4">${repair.icon}</div>
+                            <div class="flex-1">
+                                <h3 class="font-bold text-gray-900 text-lg">${repair.name}</h3>
+                                <p class="text-sm text-gray-600 mt-1">${repair.description}</p>
+                                <div class="mt-3 flex items-center">
+                                    <span class="text-sm font-bold text-indigo-600">$${repair.min.toLocaleString()} - $${repair.max.toLocaleString()}</span>
+                                    <span class="ml-3 text-xs text-gray-500">Avg: $${((repair.min + repair.max) / 2).toLocaleString()}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <div class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                                <div class="w-3 h-3 rounded-full bg-indigo-600 opacity-0 transform scale-0 transition-all duration-300"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleRepair(repairId) {
+            const element = document.getElementById(`repair-${repairId}`);
+            const dot = element.querySelector('.w-3');
+            
+            if (selectedRepairs.includes(repairId)) {
+                selectedRepairs = selectedRepairs.filter(id => id !== repairId);
+                element.classList.remove('selected');
+                dot.style.opacity = '0';
+                dot.style.transform = 'scale(0)';
+            } else {
+                selectedRepairs.push(repairId);
+                element.classList.add('selected');
+                dot.style.opacity = '1';
+                dot.style.transform = 'scale(1)';
+            }
+            
+            updateRepairTotal();
+            if (document.getElementById('arv').value && document.getElementById('sqft').value) {
+                calculateDeal();
+            }
+        }
+
+        function updateRepairTotal() {
+            const total = selectedRepairs.reduce((sum, repairId) => {
+                const repair = repairOptions.find(r => r.id === repairId);
+                return sum + (repair ? (repair.min + repair.max) / 2 : 0);
+            }, 0);
+            
+            animateNumber('repairTotal', total, true);
+        }
+
+        function updateTargetPercent(value) {
+            document.getElementById('targetPercentDisplay').textContent = value + '%';
+            document.getElementById('targetPercent').style.background = 
+                `linear-gradient(to right, #6366f1 0%, #6366f1 ${(value-50)*2.85}%, #e5e7eb ${(value-50)*2.85}%, #e5e7eb 100%)`;
+            
+            if (document.getElementById('arv').value && document.getElementById('sqft').value) {
+                calculateDeal();
+            }
+        }
+
+        function animateNumber(elementId, endValue, isCurrency = false) {
+            const element = document.getElementById(elementId);
+            const startValue = parseInt(element.textContent.replace(/[^0-9.-]+/g, '')) || 0;
+            const duration = 1000;
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const currentValue = Math.round(startValue + (endValue - startValue) * easeProgress);
+                
+                element.textContent = isCurrency ? `$${currentValue.toLocaleString()}` : 
+                                    elementId === 'margin' ? `${currentValue}%` : currentValue.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        function calculateDeal() {
+            const arv = parseFloat(document.getElementById('arv').value) || 0;
+            const sqft = parseFloat(document.getElementById('sqft').value) || 0;
+            const targetPercent = parseFloat(document.getElementById('targetPercent').value) || 70;
+
+            if (!arv || !sqft) {
+                document.getElementById('analysisCard').style.display = 'block';
+                document.getElementById('resultsCard').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('analysisCard').style.display = 'none';
+            document.getElementById('resultsCard').style.display = 'block';
+
+            const totalRepairCosts = selectedRepairs.reduce((total, repairId) => {
+                const repair = repairOptions.find(r => r.id === repairId);
+                return total + (repair ? (repair.min + repair.max) / 2 : 0);
+            }, 0);
+
+            const closingCosts = arv * 0.03;
+            const hardMoneyInterest = arv * 0.06;
+            
+            const maxAllowableOffer = Math.max(0, (arv * (targetPercent / 100)) - totalRepairCosts - closingCosts - hardMoneyInterest);
+            const totalInvestment = maxAllowableOffer + totalRepairCosts + closingCosts + hardMoneyInterest;
+            const projectedProfit = arv - totalInvestment;
+            const profitMargin = arv > 0 ? (projectedProfit / arv) * 100 : 0;
+
+            // Animate numbers
+            animateNumber('maxOffer', Math.round(maxAllowableOffer), true);
+            animateNumber('profit', Math.round(projectedProfit), true);
+            animateNumber('margin', Math.round(profitMargin));
+            animateNumber('totalInvestment', Math.round(totalInvestment), true);
+
+            // Update deal quality with animation
+            let dealQuality = 'POOR DEAL';
+            let dealClass = 'text-red-600';
+            let dealIcon = '😟';
+            let dealMessage = 'This deal may result in a loss';
+            
+            if (profitMargin >= 20) {
+                dealQuality = 'EXCELLENT DEAL';
+                dealClass = 'text-green-600';
+                dealIcon = '🎉';
+                dealMessage = 'This is a highly profitable opportunity!';
+            } else if (profitMargin >= 15) {
+                dealQuality = 'GOOD DEAL';
+                dealClass = 'text-blue-600';
+                dealIcon = '😊';
+                dealMessage = 'Solid profit potential with this one';
+            } else if (profitMargin >= 10) {
+                dealQuality = 'FAIR DEAL';
+                dealClass = 'text-yellow-600';
+                dealIcon = '🤔';
+                dealMessage = 'Modest profit, consider negotiating';
+            }
+
+            const dealQualityEl = document.getElementById('dealQuality');
+            const dealIconEl = document.getElementById('dealQualityIcon');
+            const dealMessageEl = document.getElementById('dealMessage');
+            
+            dealQualityEl.textContent = dealQuality;
+            dealQualityEl.className = `text-3xl font-bold mb-2 ${dealClass}`;
+            dealIconEl.textContent = dealIcon;
+            dealMessageEl.textContent = dealMessage;
+            
+            // Add success animation
+            dealQualityEl.classList.add('success-pulse');
+            setTimeout(() => dealQualityEl.classList.remove('success-pulse'), 500);
+
+            document.getElementById('breakdown').innerHTML = `
+                <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                    <span class="text-gray-700 font-medium">Estimated ARV</span>
+                    <span class="font-bold text-gray-900">$${arv.toLocaleString()}</span>
+                </div>
+                <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                    <span class="text-gray-700 font-medium">Purchase Target (${targetPercent}%)</span>
+                    <span class="font-bold text-gray-900">$${(arv * targetPercent / 100).toLocaleString()}</span>
+                </div>
+                <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                    <span class="text-gray-700 font-medium">Square Footage</span>
+                    <span class="font-bold text-gray-900">${sqft.toLocaleString()} sq ft</span>
+                </div>
+                <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                    <span class="text-gray-700 font-medium">Repair Costs</span>
+                    <span class="font-bold text-red-600">-$${totalRepairCosts.toLocaleString()}</span>
+                </div>
+                <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                    <span class="text-gray-700 font-medium">Closing Costs (3%)</span>
+                    <span class="font-bold text-red-600">-$${closingCosts.toLocaleString()}</span>
+                </div>
+                <div class="flex justify-between items-center py-3">
+                    <span class="text-gray-700 font-medium">Hard Money (6mo @ 12%)</span>
+                    <span class="font-bold text-red-600">-$${hardMoneyInterest.toLocaleString()}</span>
+                </div>
+            `;
+        }
+
+        function resetAnalysis() {
+            document.getElementById('address').value = '';
+            document.getElementById('sqft').value = '';
+            document.getElementById('arv').value = '';
+            document.getElementById('targetPercent').value = 70;
+            document.getElementById('targetPercentDisplay').textContent = '70%';
+            selectedRepairs = [];
+            initRepairOptions();
+            updateRepairTotal();
+            document.getElementById('analysisCard').style.display = 'block';
+            document.getElementById('resultsCard').style.display = 'none';
+        }
+
+        // Initialize the app
+        initRepairOptions();
+    </script>
+</body>
+</html>
