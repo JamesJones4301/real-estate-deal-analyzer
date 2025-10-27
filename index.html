@@ -179,13 +179,26 @@
                     <div class="glass rounded-3xl shadow-2xl p-6 card-hover">
                         <h3 class="text-lg font-bold mb-3">Last Updated, ask seller</h3>
                         <div class="grid grid-cols-2 gap-3 text-sm">
-                            <label>Roof <input id="lu-roof" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY"></label>
-                            <label>Electrical Panel <input id="lu-elec" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY"></label>
-                            <label>Plumbing Main/Under <input id="lu-plumb" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY"></label>
-                            <label>HVAC <input id="lu-hvac" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY"></label>
-                            <label>Windows <input id="lu-win" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY"></label>
-                            <label>Exterior Paint <input id="lu-extpaint" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY"></label>
+                            <label>Roof
+                                <input id="lu-roof" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
+                            </label>
+                            <label>Electrical Panel
+                                <input id="lu-elec" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
+                            </label>
+                            <label>Plumbing Main/Under
+                                <input id="lu-plumb" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
+                            </label>
+                            <label>HVAC
+                                <input id="lu-hvac" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
+                            </label>
+                            <label>Windows
+                                <input id="lu-win" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
+                            </label>
+                            <label>Exterior Paint
+                                <input id="lu-extpaint" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
+                            </label>
                         </div>
+                        <div id="ageSuggestions" class="mt-3 text-sm"></div>
                         <p class="text-xs text-gray-600 mt-2">Older years raise risk. Tool bumps rehab by 10 percent if two or more are 2010 or older.</p>
                     </div>
 
@@ -311,8 +324,8 @@
 
                 <!-- Middle Column -->
                 <div class="lg:col-span-4">
-                    <div class="glass rounded-3xl shadow-2xl p-8 h-full">
-                        <div class="flex items-center justify-between mb-6 sticky top-0 bg-white bg-opacity-95 pb-4 z-10">
+                    <div class="glass rounded-3xl shadow-2xl p-8 h-full flex flex-col min-h-[60vh]">
+                        <div class="flex items-center justify-between mb-4 sticky top-2 bg-white bg-opacity-95 pb-3 z-10">
                             <h2 class="text-2xl font-bold text-gray-900 flex items-center">
                                 <span class="gradient-bg text-white p-3 rounded-2xl mr-4 shadow-lg bounce">
                                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
@@ -325,16 +338,17 @@
                         </div>
 
                         <!-- Quick Estimate toggle -->
-                        <label class="flex items-center space-x-3 mb-4">
+                        <label class="flex items-center space-x-3 mb-2">
                             <input id="quickMode" type="checkbox" class="w-5 h-5" onchange="calculateDeal()">
                             <span class="font-semibold">Quick Estimate mode, uses per sq ft bands</span>
                         </label>
+                        <p id="quickBand" class="text-sm text-gray-600 mb-4"></p>
 
-                        <div class="mb-6">
+                        <div class="mb-4">
                             <input type="text" id="repairSearch" placeholder="🔍 Search repairs..." class="modern-input w-full p-4 rounded-2xl text-lg focus:outline-none" onkeyup="filterRepairs()">
                         </div>
 
-                        <div class="space-y-3 max-h-[calc(100vh-350px)] overflow-y-auto pr-2" id="repairOptions"></div>
+                        <div class="flex-1 min-h-0 overflow-y-auto space-y-3 pr-2" id="repairOptions"></div>
                     </div>
                 </div>
 
@@ -668,13 +682,71 @@
             requestAnimationFrame(update);
         }
 
+        // Quick Estimate helpers
         function perSqftRange(arv){
             if (arv >= 600000) return [125, 200]; // new build band
             if (arv >= 500000) return [50, 70];
             if (arv >= 300000) return [30, 60];
             return [20, 40];
         }
+        function showQuickBand(arv){
+            const b = document.getElementById('quickBand');
+            if (!b) return;
+            let lo=20, hi=40;
+            if (arv>=600000){ lo=125; hi=200; }
+            else if (arv>=500000){ lo=50; hi=70; }
+            else if (arv>=300000){ lo=30; hi=60; }
+            b.textContent = `Quick band: $${lo}–$${hi} per sq ft`;
+        }
 
+        // Age-based suggestions
+        const ageSuggestMap = [
+          {input:'lu-roof', label:'Roof', repairId:'roof-replace'},
+          {input:'lu-hvac', label:'HVAC', repairId:'hvac-new'},
+          {input:'lu-plumb', label:'Plumbing Under House', repairId:'plumbing-under'},
+          {input:'lu-elec', label:'Electrical Panel', repairId:'electrical-panel'},
+          {input:'lu-win', label:'Windows', repairId:'windows-replace'}
+        ];
+        function yearsOldFromInput(id){
+          const v = document.getElementById(id)?.value;
+          if (!/^\d{4}$/.test(v)) return null;
+          const y = Number(v);
+          const now = new Date().getFullYear();
+          return now - y;
+        }
+        function ensureSelected(id){
+          if (!selectedRepairs.includes(id)){
+            selectedRepairs.push(id);
+            const el = document.getElementById('repair-'+id);
+            if (el){
+              el.classList.add('selected','glow');
+              const dot = el.querySelector('.w-3');
+              if (dot){ dot.style.opacity='1'; dot.style.transform='scale(1)'; }
+            }
+          }
+        }
+        function updateAgeSuggestions(){
+          const wrap = document.getElementById('ageSuggestions');
+          if (!wrap) return;
+          const over = [];
+          ageSuggestMap.forEach(m=>{
+            const yrs = yearsOldFromInput(m.input);
+            if (yrs!=null && yrs > 14) over.push({...m, yrs});
+          });
+          if (over.length===0){
+            wrap.innerHTML = '';
+            return;
+          }
+          const chips = over.map(m=>{
+            return `<button class="px-3 py-1 mr-2 mb-2 bg-yellow-100 hover:bg-yellow-200 rounded-full"
+              onclick="ensureSelected('${m.repairId}'); updateRepairTotal(); calculateDeal()">
+              Suggest: Replace ${m.label} (${m.yrs} yrs)
+            </button>`;
+          }).join('');
+          wrap.innerHTML = `<div class="text-gray-700">Age signals found. Click to add:</div><div class="mt-2">${chips}</div>`;
+        }
+
+        // Risk bump if two or more majors are 2010 or older
         function ageRiskBump(){
             const ids = ['lu-roof','lu-elec','lu-plumb','lu-hvac','lu-win','lu-extpaint'];
             const old = ids.map(id => document.getElementById(id)?.value)
@@ -687,6 +759,8 @@
             const arv = parseFloat(document.getElementById('arv').value) || 0;
             const sqft = parseFloat(document.getElementById('sqft').value) || 0;
             const projectTimeline = parseFloat(document.getElementById('projectTimeline').value) || 6;
+
+            showQuickBand(arv);
 
             if (!purchasePrice || !arv) {
                 document.getElementById('analysisCard').style.display = 'block';
@@ -949,6 +1023,8 @@
             updateRepairTotal();
             document.getElementById('analysisCard').style.display = 'block';
             document.getElementById('resultsCard').style.display = 'none';
+            updateAgeSuggestions();
+            showQuickBand(parseFloat(document.getElementById('arv').value) || 0);
         }
 
         function emailResults() {
@@ -1015,6 +1091,8 @@ Proverbs 31 LandSphere - Real Estate Investment Solutions`;
 
         initRepairOptions();
         setInitialSliderFills();
+        updateAgeSuggestions();
+        showQuickBand(0);
     </script>
 </body>
 </html>
