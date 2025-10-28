@@ -1094,5 +1094,32 @@ Proverbs 31 LandSphere - Real Estate Investment Solutions`;
         updateAgeSuggestions();
         showQuickBand(0);
     </script>
+    <div id="emailFallback" class="fixed inset-0 hidden items-center justify-center bg-black/40">
+  <div class="glass w-[min(720px,92vw)] max-h-[90vh] overflow-auto rounded-2xl p-6">
+    <h3 class="text-xl font-bold mb-2">Email didn’t open</h3>
+    <p class="text-sm text-gray-600 mb-4">Copy the email body or download a .eml file, then send from your mail app.</p>
+
+    <div class="mb-3">
+      <label class="block text-xs font-semibold text-gray-600">To</label>
+      <input id="fb-to" class="modern-input w-full p-2 rounded-lg" readonly>
+    </div>
+
+    <div class="mb-3">
+      <label class="block text-xs font-semibold text-gray-600">Subject</label>
+      <input id="fb-subject" class="modern-input w-full p-2 rounded-lg" readonly>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-xs font-semibold text-gray-600">Body</label>
+      <textarea id="fb-body" class="modern-input w-full p-3 rounded-lg h-60"></textarea>
+    </div>
+
+    <div class="flex gap-3">
+      <button onclick="copyFallbackBody()" class="btn-primary px-4 py-2 rounded-xl text-white font-bold">Copy body</button>
+      <button onclick="downloadFallbackEML()" class="px-4 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 font-bold">Download .eml</button>
+      <button onclick="hideFallback()" class="ml-auto px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 font-bold">Close</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
