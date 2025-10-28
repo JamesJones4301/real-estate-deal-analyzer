@@ -1,1057 +1,1038 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proverbs 31 LandSphere - Ultimate Deal Analyzer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        body { 
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
-        * { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { 
-            background: linear-gradient(135deg, #f0c419 0%, #8bc34a 100%); 
-            border-radius: 10px; 
-        }
-        ::-webkit-scrollbar-thumb:hover { background: #8bc34a; }
-        .glass {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-        }
-        .glass-dark {
-            background: rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .gradient-bg {
-            background: linear-gradient(135deg, #f0c419 0%, #7cb342 50%, #8bc34a 100%);
-            background-size: 200% 200%;
-            animation: gradientShift 8s ease infinite;
-        }
-        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .btn-primary {
-            background: linear-gradient(135deg, #f0c419 0%, #8bc34a 100%);
-            transform: translateY(0) scale(1);
-            box-shadow: 0 4px 20px rgba(240, 196, 25, 0.3), 0 2px 4px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s;
-        }
-        .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(240, 196, 25, 0.4), 0 5px 15px rgba(0,0,0,0.2); }
-        .btn-primary:hover::before { left: 100%; }
-        .btn-primary:active { transform: translateY(-1px) scale(1.01); }
-        .card-hover { transform: translateY(0) scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .card-hover:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.2); }
-        .repair-card { position: relative; overflow: hidden; transform: scale(1); background: white; }
-        .repair-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(139, 195, 74, 0.1), transparent); transition: left 0.6s; }
-        .repair-card:hover::before { left: 100%; }
-        .repair-card:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: #8bc34a !important; }
-        .repair-card.selected { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #ddd6fe 100%); border-color: #8bc34a; transform: scale(1.05); box-shadow: 0 10px 20px rgba(139, 195, 74, 0.2); }
-        .float { animation: float 4s ease-in-out infinite; }
-        .float-delay { animation: float 4s ease-in-out 0.5s infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 33% { transform: translateY(-10px) rotate(-3deg); } 66% { transform: translateY(-5px) rotate(3deg); } }
-        .pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
-        .modern-input { border: 2px solid #e5e7eb; background: #f9fafb; position: relative; transform: scale(1); }
-        .modern-input:focus { border-color: #8bc34a; background: white; box-shadow: 0 0 0 4px rgba(139, 195, 74, 0.15), 0 2px 4px rgba(0,0,0,0.05); transform: scale(1.02); }
-        @keyframes successPulse { 0% { transform: scale(1) rotate(0deg); } 25% { transform: scale(1.1) rotate(5deg); } 50% { transform: scale(1.15) rotate(-5deg); } 75% { transform: scale(1.1) rotate(3deg); } 100% { transform: scale(1) rotate(0deg); } }
-        .success-pulse { animation: successPulse 0.8s ease-in-out; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        .bounce { animation: bounce 1s ease-in-out; }
-        .slider-container { position: relative; }
-        .slider-track { height: 8px; background: #e5e7eb; border-radius: 4px; position: relative; overflow: hidden; }
-        .slider-fill { height: 100%; background: linear-gradient(90deg, #f0c419 0%, #8bc34a 100%); border-radius: 4px; transition: width 0.3s ease; }
-        input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; background: transparent; outline: none; position: absolute; top: 0; margin: 0; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; background: white; border: 3px solid #8bc34a; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: all 0.3s ease; }
-        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); box-shadow: 0 4px 12px rgba(139, 195, 74, 0.4); }
-        .tab-button { padding: 12px 24px; border: none; background: #f3f4f6; cursor: pointer; font-weight: 600; border-radius: 12px 12px 0 0; margin-right: 4px; position: relative; overflow: hidden; transition: all 0.3s ease; }
-        .tab-button::before { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 3px; background: linear-gradient(90deg, #f0c419 0%, #8bc34a 100%); transition: width 0.3s ease; }
-        .tab-button.active { background: white; transform: translateY(-2px); }
-        .tab-button.active::before { width: 100%; }
-        .tab-content { display: none; padding: 24px; background: white; border-radius: 0 12px 12px 12px; animation: fadeIn 0.5s ease; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .toggle-switch { position: relative; display: inline-block; width: 64px; height: 32px; }
-        .toggle-switch input { opacity: 0; width: 0; height: 0; }
-        .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 34px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
-        .toggle-slider:before { position: absolute; content: ""; height: 24px; width: 24px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        input:checked + .toggle-slider { background: linear-gradient(135deg, #f0c419 0%, #8bc34a 100%); }
-        input:checked + .toggle-slider:before { transform: translateX(32px); }
-        .shimmer { background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        .ticker { display: inline-block; font-variant-numeric: tabular-nums; }
-        .metric-card { transform: translateY(0) scale(1); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .metric-card:hover { transform: translateY(-8px) scale(1.05) rotateX(10deg); }
-        .blob { position: absolute; filter: blur(40px); opacity: 0.6; animation: blob 10s infinite; }
-        @keyframes blob { 0% { transform: translate(0px, 0px) scale(1) rotate(0deg); } 33% { transform: translate(30px, -50px) scale(1.1) rotate(120deg); } 66% { transform: translate(-20px, 20px) scale(0.9) rotate(240deg); } 100% { transform: translate(0px, 0px) scale(1) rotate(360deg); } }
-        .glow { box-shadow: 0 0 20px rgba(139, 195, 74, 0.5); }
-        .value-display { transform: scale(1); transition: transform 0.3s ease; }
-        .value-display.updating { transform: scale(1.1); color: #8bc34a; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Proverbs 31 LandSphere - Ultimate Deal Analyzer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif;overflow-x:hidden}
+    *{transition:all .4s cubic-bezier(.4,0,.2,1)}
+    ::-webkit-scrollbar{width:10px}
+    ::-webkit-scrollbar-track{background:#f1f5f9;border-radius:10px}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(135deg,#f0c419 0%,#8bc34a 100%);border-radius:10px}
+    ::-webkit-scrollbar-thumb:hover{background:#8bc34a}
+    .glass{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.3);box-shadow:0 8px 32px 0 rgba(31,38,135,.15)}
+    .glass-dark{background:rgba(0,0,0,.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1)}
+    .gradient-bg{background:linear-gradient(135deg,#f0c419 0%,#7cb342 50%,#8bc34a 100%);background-size:200% 200%;animation:gradientShift 8s ease infinite}
+    @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .btn-primary{background:linear-gradient(135deg,#f0c419 0%,#8bc34a 100%);transform:translateY(0) scale(1);box-shadow:0 4px 20px rgba(240,196,25,.3),0 2px 4px rgba(0,0,0,.1);position:relative;overflow:hidden}
+    .btn-primary::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);transition:left .5s}
+    .btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 10px 30px rgba(240,196,25,.4),0 5px 15px rgba(0,0,0,.2)}
+    .btn-primary:hover::before{left:100%}
+    .btn-primary:active{transform:translateY(-1px) scale(1.01)}
+    .card-hover{transform:translateY(0) scale(1);box-shadow:0 4px 6px -1px rgba(0,0,0,.1)}
+    .card-hover:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 20px 40px -5px rgba(0,0,0,.2)}
+    .repair-card{position:relative;overflow:hidden;transform:scale(1);background:#fff}
+    .repair-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(139,195,74,.1),transparent);transition:left .6s}
+    .repair-card:hover::before{left:100%}
+    .repair-card:hover{transform:scale(1.05) translateY(-2px);box-shadow:0 10px 20px rgba(0,0,0,.1);border-color:#8bc34a!important}
+    .repair-card.selected{background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 50%,#ddd6fe 100%);border-color:#8bc34a;transform:scale(1.05);box-shadow:0 10px 20px rgba(139,195,74,.2)}
+    .float{animation:float 4s ease-in-out infinite}
+    .float-delay{animation:float 4s ease-in-out .5s infinite}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(0)}33%{transform:translateY(-10px) rotate(-3deg)}66%{transform:translateY(-5px) rotate(3deg)}}
+    .pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+    .modern-input{border:2px solid #e5e7eb;background:#f9fafb;position:relative;transform:scale(1)}
+    .modern-input:focus{border-color:#8bc34a;background:#fff;box-shadow:0 0 0 4px rgba(139,195,74,.15),0 2px 4px rgba(0,0,0,.05);transform:scale(1.02)}
+    @keyframes successPulse{0%{transform:scale(1) rotate(0)}25%{transform:scale(1.1) rotate(5deg)}50%{transform:scale(1.15) rotate(-5deg)}75%{transform:scale(1.1) rotate(3deg)}100%{transform:scale(1) rotate(0)}}
+    .success-pulse{animation:successPulse .8s ease-in-out}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+    .bounce{animation:bounce 1s ease-in-out}
+    .slider-container{position:relative}
+    .slider-track{height:8px;background:#e5e7eb;border-radius:4px;position:relative;overflow:hidden}
+    .slider-fill{height:100%;background:linear-gradient(90deg,#f0c419 0%,#8bc34a 100%);border-radius:4px;transition:width .3s ease}
+    input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:8px;background:transparent;outline:none;position:absolute;top:0;margin:0}
+    input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;background:#fff;border:3px solid #8bc34a;border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:all .3s ease}
+    input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 4px 12px rgba(139,195,74,.4)}
+    .tab-button{padding:12px 24px;border:none;background:#f3f4f6;cursor:pointer;font-weight:600;border-radius:12px 12px 0 0;margin-right:4px;position:relative;overflow:hidden;transition:all .3s ease}
+    .tab-button::before{content:'';position:absolute;bottom:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#f0c419 0%,#8bc34a 100%);transition:width .3s ease}
+    .tab-button.active{background:#fff;transform:translateY(-2px)}
+    .tab-button.active::before{width:100%}
+    .tab-content{display:none;padding:24px;background:#fff;border-radius:0 12px 12px 12px;animation:fadeIn .5s ease}
+    .tab-content.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .toggle-switch{position:relative;display:inline-block;width:64px;height:32px}
+    .toggle-switch input{opacity:0;width:0;height:0}
+    .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#cbd5e1;transition:.4s;border-radius:34px;box-shadow:inset 0 2px 4px rgba(0,0,0,.1)}
+    .toggle-slider:before{position:absolute;content:"";height:24px;width:24px;left:4px;bottom:4px;background:#fff;transition:.4s;border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+    input:checked + .toggle-slider{background:linear-gradient(135deg,#f0c419 0%,#8bc34a 100%)}
+    input:checked + .toggle-slider:before{transform:translateX(32px)}
+    .shimmer{background:linear-gradient(90deg,#f3f4f6 25%,#e5e7eb 50%,#f3f4f6 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .ticker{display:inline-block;font-variant-numeric:tabular-nums}
+    .metric-card{transform:translateY(0) scale(1);transition:all .3s cubic-bezier(.4,0,.2,1)}
+    .metric-card:hover{transform:translateY(-8px) scale(1.05) rotateX(10deg)}
+    .blob{position:absolute;filter:blur(40px);opacity:.6;animation:blob 10s infinite}
+    @keyframes blob{0%{transform:translate(0,0) scale(1) rotate(0)}33%{transform:translate(30px,-50px) scale(1.1) rotate(120deg)}66%{transform:translate(-20px,20px) scale(.9) rotate(240deg)}100%{transform:translate(0,0) scale(1) rotate(360deg)}}
+    .glow{box-shadow:0 0 20px rgba(139,195,74,.5)}
+    .value-display{transform:scale(1);transition:transform .3s ease}
+    .value-display.updating{transform:scale(1.1);color:#8bc34a}
+  </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100">
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div class="blob absolute -top-40 -right-40 w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply"></div>
-        <div class="blob absolute -bottom-40 -left-40 w-96 h-96 bg-green-300 rounded-full mix-blend-multiply" style="animation-delay: 3s;"></div>
-        <div class="blob absolute top-1/2 left-1/2 w-96 h-96 bg-lime-300 rounded-full mix-blend-multiply" style="animation-delay: 6s;"></div>
-    </div>
+  <!-- Animated background -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="blob absolute -top-40 -right-40 w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply"></div>
+    <div class="blob absolute -bottom-40 -left-40 w-96 h-96 bg-green-300 rounded-full mix-blend-multiply" style="animation-delay:3s"></div>
+    <div class="blob absolute top-1/2 left-1/2 w-96 h-96 bg-lime-300 rounded-full mix-blend-multiply" style="animation-delay:6s"></div>
+  </div>
 
-    <div id="app" class="relative min-h-screen p-4">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12 relative">
-                <div class="mb-8 float">
-                    <img src="logo.png" alt="Proverbs 31 LandSphere" class="h-28 mx-auto drop-shadow-2xl">
-                    <p class="text-xl text-gray-700 font-semibold mt-2">Professional Real Estate Investment Solutions</p>
-                </div>
-                <h1 class="text-6xl font-900 text-gray-900 mb-4 tracking-tight">
-                    Ultimate Deal Analyzer <span class="text-transparent bg-clip-text gradient-bg">Pro</span>
-                </h1>
-                <p class="text-2xl text-gray-600 max-w-3xl mx-auto">
-                    Complete fix & flip analysis with advanced ROI calculations, financing options, and cash flow projections
-                </p>
-            </div>
-
-            <div class="grid lg:grid-cols-12 gap-6">
-                <!-- Left Column -->
-                <div class="lg:col-span-4 space-y-6">
-                    <!-- Property Details -->
-                    <div class="glass rounded-3xl shadow-2xl p-8 card-hover">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                                <span class="gradient-bg text-white p-3 rounded-2xl mr-4 shadow-lg float-delay">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
-                                </span>
-                                Property Details
-                            </h2>
-                        </div>
-                        <div class="space-y-5">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Property Address</label>
-                                <input type="text" id="address" placeholder="123 Main St, City, State" class="modern-input w-full p-4 rounded-2xl text-lg focus:outline-none">
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Square Footage</label>
-                                    <input type="number" id="sqft" placeholder="2,000" class="modern-input w-full p-4 rounded-2xl text-lg focus:outline-none" onchange="calculateDeal()">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Beds/Baths</label>
-                                    <input type="text" id="beds-baths" placeholder="3/2" class="modern-input w-full p-4 rounded-2xl text-lg focus:outline-none">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Purchase Price</label>
-                                <div class="relative">
-                                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-bold text-xl">$</span>
-                                    <input type="number" id="purchase-price" placeholder="250,000" class="modern-input w-full p-4 pl-10 rounded-2xl text-lg font-semibold focus:outline-none" onchange="calculateDeal()">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">After Repair Value (ARV)</label>
-                                <div class="relative">
-                                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-bold text-xl">$</span>
-                                    <input type="number" id="arv" placeholder="400,000" class="modern-input w-full p-4 pl-10 rounded-2xl text-lg font-semibold focus:outline-none" onchange="calculateDeal()">
-                                </div>
-                            </div>
-                            <button onclick="calculateDeal()" class="btn-primary w-full py-4 rounded-2xl text-white font-bold text-lg shadow-xl">
-                                Calculate Deal Analysis
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Last Updated prompt -->
-                    <div class="glass rounded-3xl shadow-2xl p-6 card-hover">
-                        <h3 class="text-lg font-bold mb-3">Last Updated, ask seller</h3>
-                        <div class="grid grid-cols-2 gap-3 text-sm">
-                            <label>Roof
-                                <input id="lu-roof" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
-                            </label>
-                            <label>Electrical Panel
-                                <input id="lu-elec" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
-                            </label>
-                            <label>Plumbing Main/Under
-                                <input id="lu-plumb" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
-                            </label>
-                            <label>HVAC
-                                <input id="lu-hvac" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
-                            </label>
-                            <label>Windows
-                                <input id="lu-win" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
-                            </label>
-                            <label>Exterior Paint
-                                <input id="lu-extpaint" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
-                            </label>
-                        </div>
-                        <div id="ageSuggestions" class="mt-3 text-sm"></div>
-                        <p class="text-xs text-gray-600 mt-2">Older years raise risk. Tool bumps rehab by 10 percent if two or more are 2010 or older.</p>
-                    </div>
-
-                    <!-- Financing -->
-                    <div class="glass rounded-3xl shadow-2xl p-8 card-hover">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                                <span class="gradient-bg text-white p-3 rounded-2xl mr-4 shadow-lg pulse">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
-                                </span>
-                                Financing
-                            </h2>
-                            <label class="flex items-center cursor-pointer">
-                                <span class="mr-3 text-sm font-bold text-gray-700">Cash</span>
-                                <div class="toggle-switch">
-                                    <input type="checkbox" id="useFinancing" checked onchange="toggleFinancing()">
-                                    <span class="toggle-slider"></span>
-                                </div>
-                                <span class="ml-3 text-sm font-bold text-gray-700">Loan</span>
-                            </label>
-                        </div>
-                        <div id="financingDetails" class="space-y-5">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-3">Down Payment: <span id="downPaymentDisplay" class="text-green-600 text-lg">10%</span></label>
-                                <div class="slider-container">
-                                    <div class="slider-track"><div class="slider-fill" id="downPaymentFill" style="width: 10%"></div></div>
-                                    <input type="range" id="downPayment" value="10" min="0" max="30" step="5" oninput="updateSlider('downPayment', this.value)" onchange="calculateDeal()">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-3">Interest Rate: <span id="interestRateDisplay" class="text-green-600 text-lg">12%</span></label>
-                                <div class="slider-container">
-                                    <div class="slider-track"><div class="slider-fill" id="interestRateFill" style="width: 60%"></div></div>
-                                    <input type="range" id="interestRate" value="12" min="8" max="18" step="0.5" oninput="updateSlider('interestRate', this.value)" onchange="calculateDeal()">
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Loan Points</label>
-                                    <input type="number" id="loanPoints" value="2" step="0.5" class="modern-input w-full p-3 rounded-xl text-lg focus:outline-none" onchange="calculateDeal()">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Term, months</label>
-                                    <input type="number" id="loanTerm" value="12" min="3" max="24" class="modern-input w-full p-3 rounded-xl text-lg focus:outline-none" onchange="calculateDeal()">
-                                </div>
-                            </div>
-                            <div class="bg-gradient-to-r from-green-50 to-lime-50 p-5 rounded-2xl border border-green-200">
-                                <div class="flex justify-between text-lg mb-2">
-                                    <span class="text-gray-700 font-semibold">Loan Amount:</span>
-                                    <span id="loanAmount" class="font-bold text-green-700 value-display">$0</span>
-                                </div>
-                                <div class="flex justify-between text-lg">
-                                    <span class="text-gray-700 font-semibold">Monthly Payment:</span>
-                                    <span id="monthlyPayment" class="font-bold text-green-700 value-display">$0</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project Costs -->
-                    <div class="glass rounded-3xl shadow-2xl p-8 card-hover">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                                <span class="gradient-bg text-white p-3 rounded-2xl mr-4 shadow-lg">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
-                                </span>
-                                Project Costs
-                            </h2>
-                        </div>
-                        <div class="space-y-5">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-3">Project Timeline: <span id="timelineDisplay" class="text-green-600 text-lg">6 months</span></label>
-                                <div class="slider-container">
-                                    <div class="slider-track"><div class="slider-fill" id="timelineFill" style="width: 25%"></div></div>
-                                    <input type="range" id="projectTimeline" value="6" min="1" max="24" oninput="updateSlider('timeline', this.value)" onchange="calculateDeal()">
-                                </div>
-                            </div>
-                            <div class="space-y-4">
-                                <h3 class="font-bold text-gray-800 text-lg">Monthly Holding Costs</h3>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <div class="glass-dark p-3 rounded-xl">
-                                        <label class="text-xs font-semibold text-gray-600">Property Tax/mo</label>
-                                        <input type="number" id="propertyTax" placeholder="350" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
-                                    </div>
-                                    <div class="glass-dark p-3 rounded-xl">
-                                        <label class="text-xs font-semibold text-gray-600">Insurance/mo</label>
-                                        <input type="number" id="insurance" placeholder="200" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
-                                    </div>
-                                    <div class="glass-dark p-3 rounded-xl">
-                                        <label class="text-xs font-semibold text-gray-600">Utilities/mo</label>
-                                        <input type="number" id="utilities" placeholder="150" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
-                                    </div>
-                                    <div class="glass-dark p-3 rounded-xl">
-                                        <label class="text-xs font-semibold text-gray-600">HOA/Other/mo</label>
-                                        <input type="number" id="hoaOther" placeholder="0" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="space-y-4">
-                                <h3 class="font-bold text-gray-800 text-lg">Sale Costs</h3>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <div class="glass-dark p-3 rounded-xl">
-                                        <label class="text-xs font-semibold text-gray-600">Realtor Comm %</label>
-                                        <input type="number" id="realtorCommission" value="6" step="0.5" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
-                                    </div>
-                                    <div class="glass-dark p-3 rounded-xl">
-                                        <label class="text-xs font-semibold text-gray-600">Closing Costs %</label>
-                                        <input type="number" id="closingCosts" value="2" step="0.5" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
-                                    </div>
-                                    <div class="glass-dark p-3 rounded-xl">
-                                        <label class="text-xs font-semibold text-gray-600">Staging Costs</label>
-                                        <input type="number" id="stagingCosts" placeholder="2000" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
-                                    </div>
-                                    <div class="glass-dark p-3 rounded-xl">
-                                        <label class="text-xs font-semibold text-gray-600">Other Costs</label>
-                                        <input type="number" id="otherCosts" placeholder="0" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Middle Column -->
-                <div class="lg:col-span-4">
-                    <div class="glass rounded-3xl shadow-2xl p-8 h-full flex flex-col min-h-[60vh]">
-                        <div class="flex items-center justify-between mb-4 sticky top-2 bg-white bg-opacity-95 pb-3 z-10">
-                            <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                                <span class="gradient-bg text-white p-3 rounded-2xl mr-4 shadow-lg bounce">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
-                                </span>
-                                Repair Estimator
-                            </h2>
-                            <div class="bg-gradient-to-r from-green-500 to-lime-500 text-white px-6 py-3 rounded-full font-bold shadow-xl transform hover:scale-105">
-                                <span class="text-sm">Total:</span> <span id="repairTotal" class="text-xl ticker ml-1">$0</span>
-                            </div>
-                        </div>
-
-                        <!-- Quick Estimate toggle -->
-                        <label class="flex items-center space-x-3 mb-2">
-                            <input id="quickMode" type="checkbox" class="w-5 h-5" onchange="calculateDeal()">
-                            <span class="font-semibold">Quick Estimate mode, uses per sq ft bands</span>
-                        </label>
-                        <p id="quickBand" class="text-sm text-gray-600 mb-4"></p>
-
-                        <div class="mb-4">
-                            <input type="text" id="repairSearch" placeholder="🔍 Search repairs..." class="modern-input w-full p-4 rounded-2xl text-lg focus:outline-none" onkeyup="filterRepairs()">
-                        </div>
-
-                        <div class="flex-1 min-h-0 overflow-y-auto space-y-3 pr-2" id="repairOptions"></div>
-                    </div>
-                </div>
-
-                <!-- Right Column -->
-                <div class="lg:col-span-4 space-y-6">
-                    <div id="analysisCard" class="glass rounded-3xl shadow-2xl p-16 text-center card-hover">
-                        <div class="text-8xl mb-8 float">📊</div>
-                        <h3 class="text-3xl font-bold text-gray-900 mb-4">Ready to Analyze</h3>
-                        <p class="text-gray-600 text-xl">Enter property details to see comprehensive deal analysis with ROI, cash flow, and profit projections</p>
-                    </div>
-                    
-                    <div id="resultsCard" class="space-y-6" style="display: none;">
-                        <div class="glass rounded-3xl shadow-2xl p-8">
-                            <div class="text-center mb-8">
-                                <div id="dealQualityIcon" class="text-8xl mb-4"></div>
-                                <div id="dealQuality" class="text-4xl font-bold mb-3">ANALYZING...</div>
-                                <div id="dealMessage" class="text-xl text-gray-600"></div>
-                            </div>
-                            
-                            <div class="grid grid-cols-2 gap-4 mb-8">
-                                <div class="metric-card bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl border border-blue-200">
-                                    <div class="text-sm text-blue-600 font-bold mb-2 flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/></svg>
-                                        Net Profit
-                                    </div>
-                                    <div id="profit" class="text-3xl font-bold text-blue-900 ticker">$0</div>
-                                </div>
-                                <div class="metric-card bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl border border-green-200">
-                                    <div class="text-sm text-green-600 font-bold mb-2 flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
-                                        ROI
-                                    </div>
-                                    <div id="roi" class="text-3xl font-bold text-green-900 ticker">0%</div>
-                                </div>
-                                <div class="metric-card bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-2xl border border-purple-200">
-                                    <div class="text-sm text-purple-600 font-bold mb-2 flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
-                                        Cash on Cash
-                                    </div>
-                                    <div id="cashOnCash" class="text-3xl font-bold text-purple-900 ticker">0%</div>
-                                </div>
-                                <div class="metric-card bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-2xl border border-gray-200">
-                                    <div class="text-sm text-gray-600 font-bold mb-2 flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
-                                        Cash Needed
-                                    </div>
-                                    <div id="cashNeeded" class="text-3xl font-bold text-gray-900 ticker">$0</div>
-                                </div>
-                            </div>
-
-                            <div class="flex mb-6">
-                                <button class="tab-button active" onclick="showTab(event,'summary')">Summary</button>
-                                <button class="tab-button" onclick="showTab(event,'cashflow')">Cash Flow</button>
-                                <button class="tab-button" onclick="showTab(event,'comparison')">Comparison</button>
-                            </div>
-
-                            <div id="summaryTab" class="tab-content active"><div class="space-y-4" id="breakdown"></div></div>
-                            <div id="cashflowTab" class="tab-content"><div id="cashflowTimeline"></div></div>
-                            <div id="comparisonTab" class="tab-content"><div id="comparisonAnalysis"></div></div>
-
-                            <div class="mt-8 space-y-4">
-                                <button onclick="emailResults()" class="btn-primary w-full py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center shadow-xl">
-                                    <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
-                                    Email Results to Team
-                                </button>
-                                <button onclick="resetAnalysis()" class="w-full py-4 bg-gray-200 hover:bg-gray-300 rounded-2xl font-bold text-gray-700 text-lg transform hover:scale-105 transition-all">
-                                    Analyze Another Deal
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Right Column -->
-            </div>
+  <div id="app" class="relative min-h-screen p-4">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12 relative">
+        <div class="mb-8 float">
+          <img src="logo.png" alt="Proverbs 31 LandSphere" class="h-28 mx-auto drop-shadow-2xl">
+          <p class="text-xl text-gray-700 font-semibold mt-2">Professional Real Estate Investment Solutions</p>
         </div>
+        <h1 class="text-6xl font-900 text-gray-900 mb-4 tracking-tight">
+          Ultimate Deal Analyzer <span class="text-transparent bg-clip-text gradient-bg">Pro</span>
+        </h1>
+        <p class="text-2xl text-gray-600 max-w-3xl mx-auto">
+          Complete fix and flip analysis with advanced ROI calculations, financing options, and cash flow projections
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-6">
+        <!-- Left Column -->
+        <div class="lg:col-span-4 space-y-6">
+          <!-- Property Details -->
+          <div class="glass rounded-3xl shadow-2xl p-8 card-hover">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                <span class="gradient-bg text-white p-3 rounded-2xl mr-4 shadow-lg float-delay">
+                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+                </span>
+                Property Details
+              </h2>
+            </div>
+            <div class="space-y-5">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Property Address</label>
+                <input type="text" id="address" placeholder="123 Main St, City, State" class="modern-input w-full p-4 rounded-2xl text-lg focus:outline-none">
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 mb-2">Square Footage</label>
+                  <input type="number" id="sqft" placeholder="2,000" class="modern-input w-full p-4 rounded-2xl text-lg focus:outline-none" onchange="calculateDeal()">
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 mb-2">Beds/Baths</label>
+                  <input type="text" id="beds-baths" placeholder="3/2" class="modern-input w-full p-4 rounded-2xl text-lg focus:outline-none">
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Purchase Price</label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-bold text-xl">$</span>
+                  <input type="number" id="purchase-price" placeholder="250,000" class="modern-input w-full p-4 pl-10 rounded-2xl text-lg font-semibold focus:outline-none" onchange="calculateDeal()">
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">After Repair Value, ARV</label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-bold text-xl">$</span>
+                  <input type="number" id="arv" placeholder="400,000" class="modern-input w-full p-4 pl-10 rounded-2xl text-lg font-semibold focus:outline-none" onchange="calculateDeal()">
+                </div>
+              </div>
+              <button onclick="calculateDeal()" class="btn-primary w-full py-4 rounded-2xl text-white font-bold text-lg shadow-xl">
+                Calculate Deal Analysis
+              </button>
+            </div>
+          </div>
+
+          <!-- Last Updated prompt -->
+          <div class="glass rounded-3xl shadow-2xl p-6 card-hover">
+            <h3 class="text-lg font-bold mb-3">Last Updated, ask seller</h3>
+            <div class="grid grid-cols-2 gap-3 text-sm">
+              <label>Roof
+                <input id="lu-roof" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
+              </label>
+              <label>Electrical Panel
+                <input id="lu-elec" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
+              </label>
+              <label>Plumbing Main or Under
+                <input id="lu-plumb" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
+              </label>
+              <label>HVAC
+                <input id="lu-hvac" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
+              </label>
+              <label>Windows
+                <input id="lu-win" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
+              </label>
+              <label>Exterior Paint
+                <input id="lu-extpaint" class="modern-input w-full p-2 rounded-lg" placeholder="YYYY" onchange="updateAgeSuggestions(); calculateDeal()">
+              </label>
+            </div>
+            <div id="ageSuggestions" class="mt-3 text-sm"></div>
+            <p class="text-xs text-gray-600 mt-2">Two or more at 2010 or older bumps repair by 10 percent.</p>
+          </div>
+
+          <!-- Financing -->
+          <div class="glass rounded-3xl shadow-2xl p-8 card-hover">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                <span class="gradient-bg text-white p-3 rounded-2xl mr-4 shadow-lg pulse">
+                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
+                </span>
+                Financing
+              </h2>
+              <label class="flex items-center cursor-pointer">
+                <span class="mr-3 text-sm font-bold text-gray-700">Cash</span>
+                <div class="toggle-switch">
+                  <input type="checkbox" id="useFinancing" checked onchange="toggleFinancing()">
+                  <span class="toggle-slider"></span>
+                </div>
+                <span class="ml-3 text-sm font-bold text-gray-700">Loan</span>
+              </label>
+            </div>
+            <div id="financingDetails" class="space-y-5">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-3">Down Payment: <span id="downPaymentDisplay" class="text-green-600 text-lg">10%</span></label>
+                <div class="slider-container">
+                  <div class="slider-track"><div class="slider-fill" id="downPaymentFill" style="width:10%"></div></div>
+                  <input type="range" id="downPayment" value="10" min="0" max="30" step="5" oninput="updateSlider('downPayment', this.value)" onchange="calculateDeal()">
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-3">Interest Rate: <span id="interestRateDisplay" class="text-green-600 text-lg">12%</span></label>
+                <div class="slider-container">
+                  <div class="slider-track"><div class="slider-fill" id="interestRateFill" style="width:60%"></div></div>
+                  <input type="range" id="interestRate" value="12" min="8" max="18" step="0.5" oninput="updateSlider('interestRate', this.value)" onchange="calculateDeal()">
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 mb-2">Loan Points</label>
+                  <input type="number" id="loanPoints" value="2" step="0.5" class="modern-input w-full p-3 rounded-xl text-lg focus:outline-none" onchange="calculateDeal()">
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 mb-2">Term, months</label>
+                  <input type="number" id="loanTerm" value="12" min="3" max="24" class="modern-input w-full p-3 rounded-xl text-lg focus:outline-none" onchange="calculateDeal()">
+                </div>
+              </div>
+              <div class="bg-gradient-to-r from-green-50 to-lime-50 p-5 rounded-2xl border border-green-200">
+                <div class="flex justify-between text-lg mb-2">
+                  <span class="text-gray-700 font-semibold">Loan Amount:</span>
+                  <span id="loanAmount" class="font-bold text-green-700 value-display">$0</span>
+                </div>
+                <div class="flex justify-between text-lg">
+                  <span class="text-gray-700 font-semibold">Monthly Payment:</span>
+                  <span id="monthlyPayment" class="font-bold text-green-700 value-display">$0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Costs -->
+          <div class="glass rounded-3xl shadow-2xl p-8 card-hover">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                <span class="gradient-bg text-white p-3 rounded-2xl mr-4 shadow-lg">
+                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 01-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+                </span>
+                Project Costs
+              </h2>
+            </div>
+            <div class="space-y-5">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-3">Project Timeline: <span id="timelineDisplay" class="text-green-600 text-lg">6 months</span></label>
+                <div class="slider-container">
+                  <div class="slider-track"><div class="slider-fill" id="timelineFill" style="width:25%"></div></div>
+                  <input type="range" id="projectTimeline" value="6" min="1" max="24" oninput="updateSlider('timeline', this.value)" onchange="calculateDeal()">
+                </div>
+              </div>
+              <div class="space-y-4">
+                <h3 class="font-bold text-gray-800 text-lg">Monthly Holding Costs</h3>
+                <div class="grid grid-cols-2 gap-3">
+                  <div class="glass-dark p-3 rounded-xl">
+                    <label class="text-xs font-semibold text-gray-600">Property Tax/mo</label>
+                    <input type="number" id="propertyTax" placeholder="350" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
+                  </div>
+                  <div class="glass-dark p-3 rounded-xl">
+                    <label class="text-xs font-semibold text-gray-600">Insurance/mo</label>
+                    <input type="number" id="insurance" placeholder="200" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
+                  </div>
+                  <div class="glass-dark p-3 rounded-xl">
+                    <label class="text-xs font-semibold text-gray-600">Utilities/mo</label>
+                    <input type="number" id="utilities" placeholder="150" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
+                  </div>
+                  <div class="glass-dark p-3 rounded-xl">
+                    <label class="text-xs font-semibold text-gray-600">HOA or Other/mo</label>
+                    <input type="number" id="hoaOther" placeholder="0" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
+                  </div>
+                </div>
+              </div>
+              <div class="space-y-4">
+                <h3 class="font-bold text-gray-800 text-lg">Sale Costs</h3>
+                <div class="grid grid-cols-2 gap-3">
+                  <div class="glass-dark p-3 rounded-xl">
+                    <label class="text-xs font-semibold text-gray-600">Realtor Comm %</label>
+                    <input type="number" id="realtorCommission" value="6" step="0.5" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
+                  </div>
+                  <div class="glass-dark p-3 rounded-xl">
+                    <label class="text-xs font-semibold text-gray-600">Closing Costs %</label>
+                    <input type="number" id="closingCosts" value="2" step="0.5" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
+                  </div>
+                  <div class="glass-dark p-3 rounded-xl">
+                    <label class="text-xs font-semibold text-gray-600">Staging Costs</label>
+                    <input type="number" id="stagingCosts" placeholder="2000" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
+                  </div>
+                  <div class="glass-dark p-3 rounded-xl">
+                    <label class="text-xs font-semibold text-gray-600">Other Costs</label>
+                    <input type="number" id="otherCosts" placeholder="0" class="modern-input w-full p-2 mt-1 rounded-lg text-sm focus:outline-none" onchange="calculateDeal()">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle Column -->
+        <div class="lg:col-span-4">
+          <div class="glass rounded-3xl shadow-2xl p-8 h-full flex flex-col min-h-[60vh]">
+            <div class="flex items-center justify-between mb-4 sticky top-2 bg-white bg-opacity-95 pb-3 z-10">
+              <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                <span class="gradient-bg text-white p-3 rounded-2xl mr-4 shadow-lg bounce">
+                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
+                </span>
+                Repair Estimator
+              </h2>
+              <div class="bg-gradient-to-r from-green-500 to-lime-500 text-white px-6 py-3 rounded-full font-bold shadow-xl transform hover:scale-105">
+                <span class="text-sm">Total:</span> <span id="repairTotal" class="text-xl ticker ml-1">$0</span>
+              </div>
+            </div>
+
+            <!-- Quick Estimate toggle -->
+            <label class="flex items-center space-x-3 mb-2">
+              <input id="quickMode" type="checkbox" class="w-5 h-5" onchange="calculateDeal()">
+              <span class="font-semibold">Quick Estimate mode, uses per sq ft bands</span>
+            </label>
+            <p id="quickBand" class="text-sm text-gray-600 mb-4"></p>
+
+            <div class="mb-4">
+              <input type="text" id="repairSearch" placeholder="🔍 Search repairs..." class="modern-input w-full p-4 rounded-2xl text-lg focus:outline-none" onkeyup="filterRepairs()">
+            </div>
+
+            <div class="flex-1 min-h-0 overflow-y-auto space-y-3 pr-2" id="repairOptions"></div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="lg:col-span-4 space-y-6">
+          <div id="analysisCard" class="glass rounded-3xl shadow-2xl p-16 text-center card-hover">
+            <div class="text-8xl mb-8 float">📊</div>
+            <h3 class="text-3xl font-bold text-gray-900 mb-4">Ready to Analyze</h3>
+            <p class="text-gray-600 text-xl">Enter property details to see ROI, cash flow, and profit projections</p>
+          </div>
+
+          <div id="resultsCard" class="space-y-6" style="display:none">
+            <div class="glass rounded-3xl shadow-2xl p-8">
+              <div class="text-center mb-8">
+                <div id="dealQualityIcon" class="text-8xl mb-4"></div>
+                <div id="dealQuality" class="text-4xl font-bold mb-3">ANALYZING...</div>
+                <div id="dealMessage" class="text-xl text-gray-600"></div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="metric-card bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl border border-blue-200">
+                  <div class="text-sm text-blue-600 font-bold mb-2 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/></svg>
+                    Net Profit
+                  </div>
+                  <div id="profit" class="text-3xl font-bold text-blue-900 ticker">$0</div>
+                </div>
+                <div class="metric-card bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl border border-green-200">
+                  <div class="text-sm text-green-600 font-bold mb-2 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
+                    ROI
+                  </div>
+                  <div id="roi" class="text-3xl font-bold text-green-900 ticker">0%</div>
+                </div>
+                <div class="metric-card bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-2xl border border-purple-200">
+                  <div class="text-sm text-purple-600 font-bold mb-2 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                    Cash on Cash
+                  </div>
+                  <div id="cashOnCash" class="text-3xl font-bold text-purple-900 ticker">0%</div>
+                </div>
+                <div class="metric-card bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-2xl border border-gray-200">
+                  <div class="text-sm text-gray-600 font-bold mb-2 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
+                    Cash Needed
+                  </div>
+                  <div id="cashNeeded" class="text-3xl font-bold text-gray-900 ticker">$0</div>
+                </div>
+              </div>
+
+              <div class="flex mb-6">
+                <button class="tab-button active" onclick="showTab(event,'summary')">Summary</button>
+                <button class="tab-button" onclick="showTab(event,'cashflow')">Cash Flow</button>
+                <button class="tab-button" onclick="showTab(event,'comparison')">Comparison</button>
+              </div>
+
+              <div id="summaryTab" class="tab-content active"><div class="space-y-4" id="breakdown"></div></div>
+              <div id="cashflowTab" class="tab-content"><div id="cashflowTimeline"></div></div>
+              <div id="comparisonTab" class="tab-content"><div id="comparisonAnalysis"></div></div>
+
+              <div class="mt-8 space-y-4">
+                <button onclick="emailResults()" class="btn-primary w-full py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center shadow-xl">
+                  <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+                  Email Results to Team
+                </button>
+                <button onclick="resetAnalysis()" class="w-full py-4 bg-gray-200 hover:bg-gray-300 rounded-2xl font-bold text-gray-700 text-lg transform hover:scale-105 transition-all">
+                  Analyze Another Deal
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Right Column -->
+      </div>
     </div>
+  </div>
 
-    <script>
-        // Sheet-aligned repair options with Typical Low/High and units
-        const repairOptions = [
-            // EXTERIOR
-            { id:'roof-repair', name:'Roof Repair', description:'Minor repairs', min:1000, max:3000, typLow:1000, typHigh:3000, icon:'🏠', category:'exterior' },
-            { id:'roof-replace', name:'Roof Replace', description:'Complete replacement', min:0, max:10000, typLow:3000, typHigh:6000, icon:'🏗️', category:'exterior' },
-            { id:'electrical-panel', name:'Electrical Replace Box', description:'Service panel', min:5000, max:8000, typLow:5000, typHigh:8000, icon:'⚡', category:'systems' },
-            { id:'aluminum-rewire', name:'Aluminum Wiring', description:'Correction or rewire', min:5000, max:10000, typLow:5000, typHigh:10000, icon:'⚡', category:'systems' },
-            { id:'gfci', name:'GFCI Needed', description:'Add protected outlets', min:1000, max:3000, typLow:1000, typHigh:3000, icon:'🔌', category:'systems' },
-            { id:'main-drain', name:'Plumbing Main Drain', description:'Sewer line', min:8000, max:15000, typLow:8000, typHigh:15000, icon:'🚿', category:'systems' },
-            { id:'plumbing-under', name:'Plumbing Under House', description:'Under-slab or crawl', min:8000, max:25000, typLow:8000, typHigh:25000, icon:'🔧', category:'systems' },
-            { id:'exterior-paint', name:'Exterior Paint', description:'$3–4/sq ft', min:6000, max:8000, typLow:6000, typHigh:8000, icon:'🎨', category:'exterior' },
-            { id:'siding-rot', name:'Replace Siding / Wood Rot', description:'Spot repairs', min:1000, max:10000, typLow:1000, typHigh:7000, icon:'🪵', category:'exterior' },
-            { id:'landscaping-tree', name:'Tree Removal', description:'Per tree', min:1000, max:4000, typLow:1000, typHigh:4000, unit:'tree', icon:'🌳', category:'exterior' },
-            { id:'foundation', name:'Foundation Repair', description:'Level or structure', min:10000, max:30000, typLow:10000, typHigh:30000, icon:'🏛️', category:'structural' },
-            { id:'haul-off', name:'Haul Off', description:'~$1,000 per trailer load', min:1000, max:5000, typLow:1000, typHigh:5000, unit:'load', icon:'🛻', category:'exterior' },
-            { id:'fence', name:'Fence', description:'Repair or replace', min:1000, max:10000, typLow:1000, typHigh:10000, icon:'🚧', category:'exterior' },
-            { id:'garage-door', name:'Garage Door', description:'Door and opener', min:1000, max:4000, typLow:1000, typHigh:4000, icon:'🚪', category:'exterior' },
-            { id:'termites-treatment', name:'Termites Treatment', description:'Treatment', min:500, max:2500, typLow:500, typHigh:2500, icon:'🐜', category:'exterior' },
-            { id:'termites-repair', name:'Termites Repair', description:'Wood repair', min:1000, max:6000, typLow:1000, typHigh:6000, icon:'🪚', category:'exterior' },
-            { id:'doors-front', name:'Front/Side Door', description:'Replacement', min:500, max:4000, typLow:500, typHigh:4000, icon:'🚪', category:'exterior' },
-            { id:'french-doors', name:'French Doors', description:'Replacement', min:2500, max:6000, typLow:2500, typHigh:6000, icon:'🚪', category:'exterior' },
-            { id:'windows-repair', name:'Windows Repair', description:'Fogged glass/locks, per window', min:200, max:500, typLow:200, typHigh:500, unit:'window', icon:'🪟', category:'exterior' },
-            { id:'windows-replace', name:'Replace All Windows', description:'Whole house', min:8000, max:20000, typLow:8000, typHigh:20000, icon:'🪟', category:'exterior' },
-            { id:'gutters', name:'Gutters', description:'Where needed', min:1000, max:5000, typLow:1000, typHigh:5000, icon:'🌀', category:'exterior' },
-            { id:'driveway', name:'Driveway', description:'Up to full replace', min:1000, max:9000, typLow:1000, typHigh:9000, icon:'🚗', category:'exterior' },
-            { id:'wells-septic', name:'Wells / Septic / Other', description:'Systems work', min:1000, max:30000, typLow:1000, typHigh:30000, icon:'💧', category:'exterior' },
+  <!-- Fallback Email Modal -->
+  <div id="emailFallback" class="fixed inset-0 hidden items-center justify-center bg-black/40">
+    <div class="glass w-[min(720px,92vw)] max-h-[90vh] overflow-auto rounded-2xl p-6">
+      <h3 class="text-xl font-bold mb-2">Email did not open</h3>
+      <p class="text-sm text-gray-600 mb-4">Copy the email body or download a .eml file, then send from your mail app.</p>
 
-            // INTERIOR
-            { id:'flooring', name:'Flooring', description:'$5–12/sq ft typical', min:10000, max:20000, typLow:10000, typHigh:20000, icon:'🏠', category:'interior' },
-            { id:'interior-paint', name:'Interior Paint', description:'$3–5/sq ft', min:2000, max:10000, typLow:2000, typHigh:10000, icon:'🖌️', category:'interior' },
-            { id:'hvac-service', name:'HVAC Service/Repair', description:'Service or repair', min:750, max:2000, typLow:750, typHigh:2000, icon:'❄️', category:'systems' },
-            { id:'hvac-major', name:'HVAC Compressor/Furnace/Coil', description:'Major parts', min:2000, max:5000, typLow:2000, typHigh:5000, icon:'❄️', category:'systems' },
-            { id:'hvac-new', name:'HVAC Entire Unit', description:'New install', min:10000, max:15000, typLow:10000, typHigh:15000, icon:'❄️', category:'systems' },
-            { id:'water-heater', name:'Water Heater', description:'Depends on space', min:1000, max:4000, typLow:1000, typHigh:4000, icon:'🔥', category:'systems' },
+      <div class="mb-3">
+        <label class="block text-xs font-semibold text-gray-600">To</label>
+        <input id="fb-to" class="modern-input w-full p-2 rounded-lg" readonly>
+      </div>
 
-            { id:'bath-full', name:'Bathroom Full Replace', description:'Per bath', min:3000, max:10000, typLow:3000, typHigh:10000, unit:'bath', icon:'🚿', category:'interior' },
-            { id:'bath-cabinets', name:'Bath Cabinets', min:600, max:2000, typLow:600, typHigh:2000, icon:'🚿', category:'interior' },
-            { id:'bath-countertops', name:'Bath Countertops', min:500, max:2000, typLow:500, typHigh:2000, icon:'🚿', category:'interior' },
-            { id:'bath-sink', name:'Bath Sink', min:300, max:1000, typLow:300, typHigh:1000, icon:'🚿', category:'interior' },
-            { id:'bath-fixtures', name:'Bath Fixtures', min:400, max:1500, typLow:400, typHigh:1500, icon:'🚿', category:'interior' },
-            { id:'toilet', name:'Toilet', description:'Each', min:200, max:500, typLow:200, typHigh:500, unit:'toilet', icon:'🚽', category:'interior' },
-            { id:'bath-kit', name:'Bath Kit', description:'Towel, TP, mirror', min:200, max:800, typLow:200, typHigh:800, icon:'🧻', category:'interior' },
+      <div class="mb-3">
+        <label class="block text-xs font-semibold text-gray-600">Subject</label>
+        <input id="fb-subject" class="modern-input w-full p-2 rounded-lg" readonly>
+      </div>
 
-            { id:'kitchen-cabinets', name:'Kitchen Cabinets', description:'Repair vs replace', min:2000, max:10000, typLow:2000, typHigh:10000, icon:'🍳', category:'interior' },
-            { id:'kitchen-tops', name:'Kitchen Countertops', min:2000, max:10000, typLow:2000, typHigh:10000, icon:'🍳', category:'interior' },
-            { id:'kitchen-sink', name:'Kitchen Sink & Fixtures', min:400, max:2000, typLow:400, typHigh:2000, icon:'🍳', category:'interior' },
-            { id:'dishwasher', name:'Dishwasher', min:500, max:2000, typLow:500, typHigh:2000, icon:'🍽️', category:'interior' },
-            { id:'stove', name:'Stove or Cooktop & Oven', min:600, max:3000, typLow:600, typHigh:3000, icon:'🔥', category:'interior' },
-            { id:'microwave-hood', name:'Microwave/Vent Hood', min:300, max:800, typLow:300, typHigh:800, icon:'🧱', category:'interior' },
+      <div class="mb-4">
+        <label class="block text-xs font-semibold text-gray-600">Body</label>
+        <textarea id="fb-body" class="modern-input w-full p-3 rounded-lg h-60"></textarea>
+      </div>
 
-            { id:'fans', name:'Fans', description:'Low to high end', min:1200, max:2400, typLow:1200, typHigh:2400, icon:'💡', category:'interior' },
-            { id:'lights', name:'Lights', description:'Each light', min:100, max:300, typLow:100, typHigh:300, unit:'light', icon:'💡', category:'interior' },
+      <div class="flex gap-3">
+        <button onclick="copyFallbackBody()" class="btn-primary px-4 py-2 rounded-xl text-white font-bold">Copy body</button>
+        <button onclick="downloadFallbackEML()" class="px-4 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 font-bold">Download .eml</button>
+        <button onclick="hideFallback()" class="ml-auto px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 font-bold">Close</button>
+      </div>
+    </div>
+  </div>
 
-            { id:'interior-doors', name:'Interior Doors', description:'Includes bi-folds, per door', min:200, max:500, typLow:200, typHigh:500, unit:'door', icon:'🚪', category:'interior' },
-            { id:'sheetrock-patch', name:'Sheetrock Patch', description:'Per section', min:100, max:100, typLow:100, typHigh:100, unit:'section', icon:'📐', category:'interior' },
-            { id:'tape-float-texture', name:'Tape/Float/Texture', description:'Room work', min:1500, max:6000, typLow:1500, typHigh:6000, icon:'📐', category:'interior' },
-            { id:'popcorn', name:'Popcorn Removal', description:'Ceilings', min:2000, max:5000, typLow:2000, typHigh:5000, icon:'🍿', category:'interior' },
-            { id:'wallpaper', name:'Wallpaper Removal', description:'Walls', min:500, max:2500, typLow:500, typHigh:2500, icon:'🧻', category:'interior' },
-            { id:'trim', name:'Trim', description:'Repair or replace', min:500, max:11000, typLow:500, typHigh:8000, icon:'🪚', category:'interior' },
-            { id:'hardware-int', name:'Interior Door Hardware', description:'Per door', min:100, max:300, typLow:100, typHigh:300, unit:'door', icon:'🗝️', category:'interior' },
-            { id:'hardware-ext', name:'Exterior Lockset', description:'Per door', min:300, max:500, typLow:300, typHigh:500, unit:'door', icon:'🔐', category:'exterior' },
-            { id:'final-clean', name:'Final Cleaning', description:'Whole house', min:300, max:600, typLow:300, typHigh:600, icon:'🧼', category:'interior' },
+  <script>
+    // Repair options
+    const repairOptions = [
+      // EXTERIOR
+      { id:'roof-repair', name:'Roof Repair', description:'Minor repairs', min:1000, max:3000, typLow:1000, typHigh:3000, icon:'🏠', category:'exterior' },
+      { id:'roof-replace', name:'Roof Replace', description:'Complete replacement', min:0, max:10000, typLow:3000, typHigh:6000, icon:'🏗️', category:'exterior' },
+      { id:'electrical-panel', name:'Electrical Replace Box', description:'Service panel', min:5000, max:8000, typLow:5000, typHigh:8000, icon:'⚡', category:'systems' },
+      { id:'aluminum-rewire', name:'Aluminum Wiring', description:'Correction or rewire', min:5000, max:10000, typLow:5000, typHigh:10000, icon:'⚡', category:'systems' },
+      { id:'gfci', name:'GFCI Needed', description:'Add protected outlets', min:1000, max:3000, typLow:1000, typHigh:3000, icon:'🔌', category:'systems' },
+      { id:'main-drain', name:'Plumbing Main Drain', description:'Sewer line', min:8000, max:15000, typLow:8000, typHigh:15000, icon:'🚿', category:'systems' },
+      { id:'plumbing-under', name:'Plumbing Under House', description:'Under slab or crawl', min:8000, max:25000, typLow:8000, typHigh:25000, icon:'🔧', category:'systems' },
+      { id:'exterior-paint', name:'Exterior Paint', description:'$3–4 per sq ft', min:6000, max:8000, typLow:6000, typHigh:8000, icon:'🎨', category:'exterior' },
+      { id:'siding-rot', name:'Replace Siding or Wood Rot', description:'Spot repairs', min:1000, max:10000, typLow:1000, typHigh:7000, icon:'🪵', category:'exterior' },
+      { id:'landscaping-tree', name:'Tree Removal', description:'Per tree', min:1000, max:4000, typLow:1000, typHigh:4000, unit:'tree', icon:'🌳', category:'exterior' },
+      { id:'foundation', name:'Foundation Repair', description:'Level or structure', min:10000, max:30000, typLow:10000, typHigh:30000, icon:'🏛️', category:'structural' },
+      { id:'haul-off', name:'Haul Off', description:'About $1000 per trailer load', min:1000, max:5000, typLow:1000, typHigh:5000, unit:'load', icon:'🛻', category:'exterior' },
+      { id:'fence', name:'Fence', description:'Repair or replace', min:1000, max:10000, typLow:1000, typHigh:10000, icon:'🚧', category:'exterior' },
+      { id:'garage-door', name:'Garage Door', description:'Door and opener', min:1000, max:4000, typLow:1000, typHigh:4000, icon:'🚪', category:'exterior' },
+      { id:'termites-treatment', name:'Termites Treatment', description:'Treatment', min:500, max:2500, typLow:500, typHigh:2500, icon:'🐜', category:'exterior' },
+      { id:'termites-repair', name:'Termites Repair', description:'Wood repair', min:1000, max:6000, typLow:1000, typHigh:6000, icon:'🪚', category:'exterior' },
+      { id:'doors-front', name:'Front or Side Door', description:'Replacement', min:500, max:4000, typLow:500, typHigh:4000, icon:'🚪', category:'exterior' },
+      { id:'french-doors', name:'French Doors', description:'Replacement', min:2500, max:6000, typLow:2500, typHigh:6000, icon:'🚪', category:'exterior' },
+      { id:'windows-repair', name:'Windows Repair', description:'Per window', min:200, max:500, typLow:200, typHigh:500, unit:'window', icon:'🪟', category:'exterior' },
+      { id:'windows-replace', name:'Replace All Windows', description:'Whole house', min:8000, max:20000, typLow:8000, typHigh:20000, icon:'🪟', category:'exterior' },
+      { id:'gutters', name:'Gutters', description:'Where needed', min:1000, max:5000, typLow:1000, typHigh:5000, icon:'🌀', category:'exterior' },
+      { id:'driveway', name:'Driveway', description:'Repair or replace', min:1000, max:9000, typLow:1000, typHigh:9000, icon:'🚗', category:'exterior' },
+      { id:'wells-septic', name:'Wells, Septic, Other', description:'Systems work', min:1000, max:30000, typLow:1000, typHigh:30000, icon:'💧', category:'exterior' },
 
-            { id:'fireplace-repair', name:'Fireplace Repair', min:500, max:2000, typLow:500, typHigh:2000, icon:'🔥', category:'interior' },
-            { id:'insulation-add', name:'Insulation Add', min:2000, max:4000, typLow:2000, typHigh:4000, icon:'🧱', category:'interior' },
-        ];
+      // INTERIOR
+      { id:'flooring', name:'Flooring', description:'$5–12 per sq ft typical', min:10000, max:20000, typLow:10000, typHigh:20000, icon:'🏠', category:'interior' },
+      { id:'interior-paint', name:'Interior Paint', description:'$3–5 per sq ft', min:2000, max:10000, typLow:2000, typHigh:10000, icon:'🖌️', category:'interior' },
+      { id:'hvac-service', name:'HVAC Service or Repair', description:'Service or repair', min:750, max:2000, typLow:750, typHigh:2000, icon:'❄️', category:'systems' },
+      { id:'hvac-major', name:'HVAC Compressor or Furnace or Coil', description:'Major parts', min:2000, max:5000, typLow:2000, typHigh:5000, icon:'❄️', category:'systems' },
+      { id:'hvac-new', name:'HVAC Entire Unit', description:'New install', min:10000, max:15000, typLow:10000, typHigh:15000, icon:'❄️', category:'systems' },
+      { id:'water-heater', name:'Water Heater', description:'Depends on space', min:1000, max:4000, typLow:1000, typHigh:4000, icon:'🔥', category:'systems' },
 
-        let selectedRepairs = [];
-        let quantities = {}; // id -> qty
-        let useFinancing = true;
+      { id:'bath-full', name:'Bathroom Full Replace', description:'Per bath', min:3000, max:10000, typLow:3000, typHigh:10000, unit:'bath', icon:'🚿', category:'interior' },
+      { id:'bath-cabinets', name:'Bath Cabinets', min:600, max:2000, typLow:600, typHigh:2000, icon:'🚿', category:'interior' },
+      { id:'bath-countertops', name:'Bath Countertops', min:500, max:2000, typLow:500, typHigh:2000, icon:'🚿', category:'interior' },
+      { id:'bath-sink', name:'Bath Sink', min:300, max:1000, typLow:300, typHigh:1000, icon:'🚿', category:'interior' },
+      { id:'bath-fixtures', name:'Bath Fixtures', min:400, max:1500, typLow:400, typHigh:1500, icon:'🚿', category:'interior' },
+      { id:'toilet', name:'Toilet', description:'Each', min:200, max:500, typLow:200, typHigh:500, unit:'toilet', icon:'🚽', category:'interior' },
+      { id:'bath-kit', name:'Bath Kit', description:'Towel, mirror, paper', min:200, max:800, typLow:200, typHigh:800, icon:'🧻', category:'interior' },
 
-        function initRepairOptions() {
-            const container = document.getElementById('repairOptions');
-            container.innerHTML = repairOptions.map(repair => `
-                <div class="repair-card glass rounded-2xl p-5 cursor-pointer border-2 border-gray-200 hover:border-green-400" 
-                     onclick="toggleRepair('${repair.id}')" id="repair-${repair.id}" data-name="${repair.name.toLowerCase()}">
-                    <div class="flex items-start justify-between">
-                        <div class="flex items-start flex-1">
-                            <div class="text-3xl mr-4">${repair.icon}</div>
-                            <div class="flex-1">
-                                <h3 class="font-bold text-gray-900 text-lg">${repair.name}${repair.unit ? ` <span class="text-xs text-gray-500">(${repair.unit})</span>` : ''}</h3>
-                                <p class="text-sm text-gray-600 mt-1">${repair.description || ''}</p>
-                                <div class="mt-3 flex items-center">
-                                    <span class="text-sm font-bold text-green-600">$${(repair.typLow ?? repair.min).toLocaleString()} - $${(repair.typHigh ?? repair.max).toLocaleString()}</span>
-                                    <span class="ml-3 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">Avg: $${avgFor(repair).toLocaleString()}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ml-4">
-                            <div class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                <div class="w-3 h-3 rounded-full bg-green-600 opacity-0 transform scale-0 transition-all duration-300"></div>
-                            </div>
-                        </div>
-                    </div>
+      { id:'kitchen-cabinets', name:'Kitchen Cabinets', description:'Repair or replace', min:2000, max:10000, typLow:2000, typHigh:10000, icon:'🍳', category:'interior' },
+      { id:'kitchen-tops', name:'Kitchen Countertops', min:2000, max:10000, typLow:2000, typHigh:10000, icon:'🍳', category:'interior' },
+      { id:'kitchen-sink', name:'Kitchen Sink and Fixtures', min:400, max:2000, typLow:400, typHigh:2000, icon:'🍳', category:'interior' },
+      { id:'dishwasher', name:'Dishwasher', min:500, max:2000, typLow:500, typHigh:2000, icon:'🍽️', category:'interior' },
+      { id:'stove', name:'Stove or Cooktop and Oven', min:600, max:3000, typLow:600, typHigh:3000, icon:'🔥', category:'interior' },
+      { id:'microwave-hood', name:'Microwave or Vent Hood', min:300, max:800, typLow:300, typHigh:800, icon:'🧱', category:'interior' },
+
+      { id:'fans', name:'Fans', description:'Low to high end', min:1200, max:2400, typLow:1200, typHigh:2400, icon:'💡', category:'interior' },
+      { id:'lights', name:'Lights', description:'Each light', min:100, max:300, typLow:100, typHigh:300, unit:'light', icon:'💡', category:'interior' },
+
+      { id:'interior-doors', name:'Interior Doors', description:'Per door', min:200, max:500, typLow:200, typHigh:500, unit:'door', icon:'🚪', category:'interior' },
+      { id:'sheetrock-patch', name:'Sheetrock Patch', description:'Per section', min:100, max:100, typLow:100, typHigh:100, unit:'section', icon:'📐', category:'interior' },
+      { id:'tape-float-texture', name:'Tape, Float, Texture', description:'Room work', min:1500, max:6000, typLow:1500, typHigh:6000, icon:'📐', category:'interior' },
+      { id:'popcorn', name:'Popcorn Removal', description:'Ceilings', min:2000, max:5000, typLow:2000, typHigh:5000, icon:'🍿', category:'interior' },
+      { id:'wallpaper', name:'Wallpaper Removal', description:'Walls', min:500, max:2500, typLow:500, typHigh:2500, icon:'🧻', category:'interior' },
+      { id:'trim', name:'Trim', description:'Repair or replace', min:500, max:11000, typLow:500, typHigh:8000, icon:'🪚', category:'interior' },
+      { id:'hardware-int', name:'Interior Door Hardware', description:'Per door', min:100, max:300, typLow:100, typHigh:300, unit:'door', icon:'🗝️', category:'interior' },
+      { id:'hardware-ext', name:'Exterior Lockset', description:'Per door', min:300, max:500, typLow:300, typHigh:500, unit:'door', icon:'🔐', category:'exterior' },
+      { id:'final-clean', name:'Final Cleaning', description:'Whole house', min:300, max:600, typLow:300, typHigh:600, icon:'🧼', category:'interior' },
+
+      { id:'fireplace-repair', name:'Fireplace Repair', min:500, max:2000, typLow:500, typHigh:2000, icon:'🔥', category:'interior' },
+      { id:'insulation-add', name:'Insulation Add', min:2000, max:4000, typLow:2000, typHigh:4000, icon:'🧱', category:'interior' },
+    ];
+
+    let selectedRepairs = [];
+    let quantities = {}; // id -> qty
+    let useFinancing = true;
+
+    function initRepairOptions(){
+      const container = document.getElementById('repairOptions');
+      container.innerHTML = repairOptions.map(repair => `
+        <div class="repair-card glass rounded-2xl p-5 cursor-pointer border-2 border-gray-200 hover:border-green-400"
+             onclick="toggleRepair('${repair.id}')" id="repair-${repair.id}" data-name="${repair.name.toLowerCase()}">
+          <div class="flex items-start justify-between">
+            <div class="flex items-start flex-1">
+              <div class="text-3xl mr-4">${repair.icon}</div>
+              <div class="flex-1">
+                <h3 class="font-bold text-gray-900 text-lg">${repair.name}${repair.unit ? ` <span class="text-xs text-gray-500">(${repair.unit})</span>` : ''}</h3>
+                <p class="text-sm text-gray-600 mt-1">${repair.description || ''}</p>
+                <div class="mt-3 flex items-center">
+                  <span class="text-sm font-bold text-green-600">$${(repair.typLow ?? repair.min).toLocaleString()} - $${(repair.typHigh ?? repair.max).toLocaleString()}</span>
+                  <span class="ml-3 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">Avg: $${avgFor(repair).toLocaleString()}</span>
                 </div>
-            `).join('');
+              </div>
+            </div>
+            <div class="ml-4">
+              <div class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                <div class="w-3 h-3 rounded-full bg-green-600 opacity-0 transform scale-0 transition-all duration-300"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
 
-            // add qty controls where unit exists
-            repairOptions.forEach(repair => {
-                if (!repair.unit) return;
-                const card = document.getElementById('repair-' + repair.id);
-                renderQtyControls(card, repair.id);
-            });
+      // qty controls where unit exists
+      repairOptions.forEach(repair => {
+        if (!repair.unit) return;
+        const card = document.getElementById('repair-' + repair.id);
+        renderQtyControls(card, repair.id);
+      });
+    }
+
+    function renderQtyControls(el, repairId){
+      const wrap = document.createElement('div');
+      wrap.className = 'mt-2 flex items-center space-x-2';
+      wrap.innerHTML = `
+        <button class="px-3 py-1 bg-gray-100 rounded" onclick="event.stopPropagation(); changeQty('${repairId}', -1)">-</button>
+        <span id="qty-${repairId}" class="min-w-[2ch] text-center font-semibold">1</span>
+        <button class="px-3 py-1 bg-gray-100 rounded" onclick="event.stopPropagation(); changeQty('${repairId}', 1)">+</button>
+      `;
+      el.querySelector('.flex-1').appendChild(wrap);
+    }
+
+    function changeQty(id, delta){
+      const next = Math.max(1, (quantities[id] || 1) + delta);
+      quantities[id] = next;
+      const el = document.getElementById('qty-' + id);
+      if (el) el.textContent = next;
+      updateRepairTotal();
+      calculateDeal();
+    }
+
+    function filterRepairs(){
+      const searchTerm = document.getElementById('repairSearch').value.toLowerCase();
+      const repairCards = document.querySelectorAll('.repair-card');
+      repairCards.forEach(card => {
+        const name = card.getAttribute('data-name');
+        if (name.includes(searchTerm)){ card.style.display = 'block'; card.style.opacity = '1'; card.style.transform = 'scale(1)'; }
+        else { card.style.opacity = '0'; card.style.transform = 'scale(.8)'; setTimeout(()=>{ if(card.style.opacity==='0') card.style.display='none'; },300); }
+      });
+    }
+
+    function toggleRepair(repairId){
+      const element = document.getElementById(`repair-${repairId}`);
+      const dot = element.querySelector('.w-3');
+      if (selectedRepairs.includes(repairId)){
+        selectedRepairs = selectedRepairs.filter(id => id !== repairId);
+        element.classList.remove('selected','glow');
+        dot.style.opacity = '0';
+        dot.style.transform = 'scale(0)';
+      } else {
+        selectedRepairs.push(repairId);
+        element.classList.add('selected','glow');
+        dot.style.opacity = '1';
+        dot.style.transform = 'scale(1)';
+        element.classList.add('bounce');
+        setTimeout(()=>element.classList.remove('bounce'),1000);
+        if (quantities[repairId] == null) quantities[repairId] = 1;
+        const qEl = document.getElementById('qty-' + repairId);
+        if (qEl) qEl.textContent = quantities[repairId];
+      }
+      updateRepairTotal();
+      calculateDeal();
+    }
+
+    function avgFor(repair){
+      const low = repair.typLow ?? repair.min ?? 0;
+      const high = repair.typHigh ?? repair.max ?? 0;
+      return Math.round((low + high) / 2);
+    }
+
+    function lineAvg(repair){
+      const avg = avgFor(repair);
+      const qty = repair.unit ? (quantities[repair.id] || 1) : 1;
+      return avg * qty;
+    }
+
+    function updateRepairTotal(){
+      const total = selectedRepairs.reduce((sum,id)=>{
+        const r = repairOptions.find(x=>x.id===id);
+        return sum + (r ? lineAvg(r) : 0);
+      },0);
+      animateNumber('repairTotal', total, true);
+    }
+
+    function toggleFinancing(){
+      useFinancing = document.getElementById('useFinancing').checked;
+      const financingDetails = document.getElementById('financingDetails');
+      if (useFinancing){ financingDetails.style.opacity='1'; financingDetails.style.maxHeight='500px'; }
+      else { financingDetails.style.opacity='0'; financingDetails.style.maxHeight='0'; }
+      calculateDeal();
+    }
+
+    function updateSlider(type, value){
+      let displayElement, fillElement, fillPercent;
+      switch(type){
+        case 'downPayment':
+          displayElement = document.getElementById('downPaymentDisplay');
+          fillElement = document.getElementById('downPaymentFill');
+          displayElement.textContent = value + '%';
+          fillPercent = (value / 30) * 100;
+          break;
+        case 'interestRate':
+          displayElement = document.getElementById('interestRateDisplay');
+          fillElement = document.getElementById('interestRateFill');
+          displayElement.textContent = value + '%';
+          fillPercent = ((value - 8) / 10) * 100;
+          break;
+        case 'timeline':
+          displayElement = document.getElementById('timelineDisplay');
+          fillElement = document.getElementById('timelineFill');
+          displayElement.textContent = value + ' months';
+          fillPercent = (value / 24) * 100;
+          break;
+      }
+      fillElement.style.width = fillPercent + '%';
+      displayElement.classList.add('updating');
+      setTimeout(()=>displayElement.classList.remove('updating'),300);
+    }
+
+    function showTab(e, tabName){
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+      document.getElementById(tabName + 'Tab').classList.add('active');
+      if (e && e.target) e.target.classList.add('active');
+    }
+
+    function animateNumber(elementId, endValue, isCurrency=false){
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      const startValue = parseInt(element.textContent.replace(/[^0-9.-]+/g,'')) || 0;
+      const duration = 1200;
+      const startTime = performance.now();
+      element.parentElement.classList.add('updating');
+      function update(currentTime){
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeProgress = 1 - Math.pow(1 - progress, 4);
+        const currentValue = Math.round(startValue + (endValue - startValue) * easeProgress);
+        if (elementId === 'roi' || elementId === 'cashOnCash') element.textContent = `${currentValue}%`;
+        else element.textContent = isCurrency ? `$${currentValue.toLocaleString()}` : currentValue.toLocaleString();
+        if (progress < 1) requestAnimationFrame(update);
+        else element.parentElement.classList.remove('updating');
+      }
+      requestAnimationFrame(update);
+    }
+
+    // Quick Estimate helpers
+    function perSqftRange(arv){
+      if (arv >= 600000) return [125,200];
+      if (arv >= 500000) return [50,70];
+      if (arv >= 300000) return [30,60];
+      return [20,40];
+    }
+    function showQuickBand(arv){
+      const b = document.getElementById('quickBand');
+      if (!b) return;
+      let lo=20, hi=40;
+      if (arv>=600000){ lo=125; hi=200; }
+      else if (arv>=500000){ lo=50; hi=70; }
+      else if (arv>=300000){ lo=30; hi=60; }
+      b.textContent = `Quick band: $${lo}–$${hi} per sq ft`;
+    }
+
+    // Age-based suggestions
+    const ageSuggestMap = [
+      {input:'lu-roof', label:'Roof', repairId:'roof-replace'},
+      {input:'lu-hvac', label:'HVAC', repairId:'hvac-new'},
+      {input:'lu-plumb', label:'Plumbing Under House', repairId:'plumbing-under'},
+      {input:'lu-elec', label:'Electrical Panel', repairId:'electrical-panel'},
+      {input:'lu-win', label:'Windows', repairId:'windows-replace'}
+    ];
+    function yearsOldFromInput(id){
+      const v = document.getElementById(id)?.value;
+      if (!/^\d{4}$/.test(v)) return null;
+      const y = Number(v);
+      const now = new Date().getFullYear();
+      return now - y;
+    }
+    function ensureSelected(id){
+      if (!selectedRepairs.includes(id)){
+        selectedRepairs.push(id);
+        const el = document.getElementById('repair-'+id);
+        if (el){
+          el.classList.add('selected','glow');
+          const dot = el.querySelector('.w-3');
+          if (dot){ dot.style.opacity='1'; dot.style.transform='scale(1)'; }
         }
+      }
+    }
+    function updateAgeSuggestions(){
+      const wrap = document.getElementById('ageSuggestions');
+      if (!wrap) return;
+      const over = [];
+      ageSuggestMap.forEach(m=>{
+        const yrs = yearsOldFromInput(m.input);
+        if (yrs!=null && yrs > 14) over.push({...m, yrs});
+      });
+      if (over.length===0){ wrap.innerHTML=''; return; }
+      const chips = over.map(m=>{
+        return `<button class="px-3 py-1 mr-2 mb-2 bg-yellow-100 hover:bg-yellow-200 rounded-full"
+          onclick="ensureSelected('${m.repairId}'); updateRepairTotal(); calculateDeal()">
+          Suggest: Replace ${m.label} (${m.yrs} yrs)
+        </button>`;
+      }).join('');
+      wrap.innerHTML = `<div class="text-gray-700">Age signals found. Click to add:</div><div class="mt-2">${chips}</div>`;
+    }
 
-        function renderQtyControls(el, repairId) {
-            const wrap = document.createElement('div');
-            wrap.className = 'mt-2 flex items-center space-x-2';
-            wrap.innerHTML = `
-                <button class="px-3 py-1 bg-gray-100 rounded" onclick="event.stopPropagation(); changeQty('${repairId}', -1)">-</button>
-                <span id="qty-${repairId}" class="min-w-[2ch] text-center font-semibold">1</span>
-                <button class="px-3 py-1 bg-gray-100 rounded" onclick="event.stopPropagation(); changeQty('${repairId}', 1)">+</button>
-            `;
-            el.querySelector('.flex-1').appendChild(wrap);
-        }
+    // Risk bump if two or more majors are 2010 or older
+    function ageRiskBump(){
+      const ids = ['lu-roof','lu-elec','lu-plumb','lu-hvac','lu-win','lu-extpaint'];
+      const old = ids.map(id => document.getElementById(id)?.value)
+                     .filter(v => /^\d{4}$/.test(v) && Number(v) <= 2010).length;
+      return old >= 2 ? 1.10 : 1.00;
+    }
 
-        function changeQty(id, delta){
-            const next = Math.max(1, (quantities[id] || 1) + delta);
-            quantities[id] = next;
-            const el = document.getElementById('qty-' + id);
-            if (el) el.textContent = next;
-            updateRepairTotal();
-            calculateDeal();
-        }
+    function calculateDeal(){
+      const purchasePrice = parseFloat(document.getElementById('purchase-price').value) || 0;
+      const arv = parseFloat(document.getElementById('arv').value) || 0;
+      const sqft = parseFloat(document.getElementById('sqft').value) || 0;
+      const projectTimeline = parseFloat(document.getElementById('projectTimeline').value) || 6;
 
-        function filterRepairs() {
-            const searchTerm = document.getElementById('repairSearch').value.toLowerCase();
-            const repairCards = document.querySelectorAll('.repair-card');
-            repairCards.forEach(card => {
-                const name = card.getAttribute('data-name');
-                if (name.includes(searchTerm)) {
-                    card.style.display = 'block';
-                    card.style.opacity = '1';
-                    card.style.transform = 'scale(1)';
-                } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'scale(0.8)';
-                    setTimeout(() => { if (card.style.opacity === '0') card.style.display = 'none'; }, 300);
-                }
-            });
-        }
+      showQuickBand(arv);
 
-        function toggleRepair(repairId) {
-            const element = document.getElementById(`repair-${repairId}`);
-            const dot = element.querySelector('.w-3');
-            if (selectedRepairs.includes(repairId)) {
-                selectedRepairs = selectedRepairs.filter(id => id !== repairId);
-                element.classList.remove('selected', 'glow');
-                dot.style.opacity = '0';
-                dot.style.transform = 'scale(0)';
-            } else {
-                selectedRepairs.push(repairId);
-                element.classList.add('selected', 'glow');
-                dot.style.opacity = '1';
-                dot.style.transform = 'scale(1)';
-                element.classList.add('bounce');
-                setTimeout(() => element.classList.remove('bounce'), 1000);
-                if (quantities[repairId] == null) quantities[repairId] = 1;
-                const qEl = document.getElementById('qty-' + repairId);
-                if (qEl) qEl.textContent = quantities[repairId];
-            }
-            updateRepairTotal();
-            calculateDeal();
-        }
+      if (!purchasePrice || !arv){
+        document.getElementById('analysisCard').style.display='block';
+        document.getElementById('resultsCard').style.display='none';
+        return;
+      }
 
-        function avgFor(repair){
-            const low = repair.typLow ?? repair.min ?? 0;
-            const high = repair.typHigh ?? repair.max ?? 0;
-            return Math.round((low + high) / 2);
-        }
+      document.getElementById('analysisCard').style.display='none';
+      document.getElementById('resultsCard').style.display='block';
 
-        function lineAvg(repair){
-            const avg = avgFor(repair);
-            const qty = repair.unit ? (quantities[repair.id] || 1) : 1;
-            return avg * qty;
-        }
+      // Quick vs Detailed repair
+      const quick = document.getElementById('quickMode')?.checked;
+      let totalRepairCosts = 0;
+      if (quick){
+        const [lo,hi] = perSqftRange(arv);
+        totalRepairCosts = sqft ? Math.round(sqft * ((lo + hi) / 2)) : 0;
+      } else {
+        totalRepairCosts = selectedRepairs.reduce((t,id)=>{
+          const r = repairOptions.find(x=>x.id===id);
+          return t + (r ? lineAvg(r) : 0);
+        },0);
+      }
+      totalRepairCosts = Math.round(totalRepairCosts * ageRiskBump());
 
-        function updateRepairTotal() {
-            const total = selectedRepairs.reduce((sum, id) => {
-                const r = repairOptions.find(x => x.id === id);
-                return sum + (r ? lineAvg(r) : 0);
-            }, 0);
-            animateNumber('repairTotal', total, true);
-        }
+      // Financing
+      let cashNeeded = 0;
+      let totalFinancingCosts = 0;
+      let monthlyPayment = 0;
+      if (useFinancing){
+        const downPaymentPercent = parseFloat(document.getElementById('downPayment').value) || 10;
+        const interestRate = parseFloat(document.getElementById('interestRate').value) || 12;
+        const loanPoints = parseFloat(document.getElementById('loanPoints').value) || 2;
+        const loanTerm = parseFloat(document.getElementById('loanTerm').value) || 12;
 
-        function toggleFinancing() {
-            useFinancing = document.getElementById('useFinancing').checked;
-            const financingDetails = document.getElementById('financingDetails');
-            if (useFinancing) {
-                financingDetails.style.opacity = '1';
-                financingDetails.style.maxHeight = '500px';
-            } else {
-                financingDetails.style.opacity = '0';
-                financingDetails.style.maxHeight = '0';
-            }
-            calculateDeal();
-        }
+        const downPayment = purchasePrice * (downPaymentPercent / 100);
+        const loanAmount = purchasePrice - downPayment + totalRepairCosts;
+        const monthlyInterestRate = interestRate / 100 / 12;
+        monthlyPayment = Math.round(loanAmount * monthlyInterestRate); // interest only
+        const totalInterest = monthlyPayment * projectTimeline;
+        const pointsCost = loanAmount * (loanPoints / 100);
 
-        function updateSlider(type, value) {
-            let displayElement, fillElement, fillPercent;
-            switch(type) {
-                case 'downPayment':
-                    displayElement = document.getElementById('downPaymentDisplay');
-                    fillElement = document.getElementById('downPaymentFill');
-                    displayElement.textContent = value + '%';
-                    fillPercent = (value / 30) * 100;
-                    break;
-                case 'interestRate':
-                    displayElement = document.getElementById('interestRateDisplay');
-                    fillElement = document.getElementById('interestRateFill');
-                    displayElement.textContent = value + '%';
-                    fillPercent = ((value - 8) / 10) * 100;
-                    break;
-                case 'timeline':
-                    displayElement = document.getElementById('timelineDisplay');
-                    fillElement = document.getElementById('timelineFill');
-                    displayElement.textContent = value + ' months';
-                    fillPercent = (value / 24) * 100;
-                    break;
-            }
-            fillElement.style.width = fillPercent + '%';
-            displayElement.classList.add('updating');
-            setTimeout(() => displayElement.classList.remove('updating'), 300);
-        }
+        totalFinancingCosts = totalInterest + pointsCost;
+        cashNeeded = downPayment + pointsCost;
 
-        function showTab(e, tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-            document.getElementById(tabName + 'Tab').classList.add('active');
-            if (e && e.target) e.target.classList.add('active');
-        }
+        const loanAmountEl = document.getElementById('loanAmount');
+        const monthlyPaymentEl = document.getElementById('monthlyPayment');
+        loanAmountEl.classList.add('updating'); monthlyPaymentEl.classList.add('updating');
+        setTimeout(()=>{
+          loanAmountEl.textContent = `$${loanAmount.toLocaleString()}`;
+          monthlyPaymentEl.textContent = `$${monthlyPayment.toLocaleString()}`;
+          loanAmountEl.classList.remove('updating'); monthlyPaymentEl.classList.remove('updating');
+        },300);
+      } else {
+        cashNeeded = purchasePrice + totalRepairCosts;
+      }
 
-        function animateNumber(elementId, endValue, isCurrency = false) {
-            const element = document.getElementById(elementId);
-            if (!element) return;
-            const startValue = parseInt(element.textContent.replace(/[^0-9.-]+/g, '')) || 0;
-            const duration = 1200;
-            const startTime = performance.now();
-            element.parentElement.classList.add('updating');
-            function update(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeProgress = 1 - Math.pow(1 - progress, 4);
-                const currentValue = Math.round(startValue + (endValue - startValue) * easeProgress);
-                if (elementId === 'roi' || elementId === 'cashOnCash') {
-                    element.textContent = `${currentValue}%`;
-                } else {
-                    element.textContent = isCurrency ? `$${currentValue.toLocaleString()}` : currentValue.toLocaleString();
-                }
-                if (progress < 1) requestAnimationFrame(update);
-                else element.parentElement.classList.remove('updating');
-            }
-            requestAnimationFrame(update);
-        }
+      // Holding costs
+      const propertyTax = (parseFloat(document.getElementById('propertyTax').value) || 350) * projectTimeline;
+      const insurance = (parseFloat(document.getElementById('insurance').value) || 200) * projectTimeline;
+      const utilities = (parseFloat(document.getElementById('utilities').value) || 150) * projectTimeline;
+      const hoaOther = (parseFloat(document.getElementById('hoaOther').value) || 0) * projectTimeline;
+      const totalHoldingCosts = propertyTax + insurance + utilities + hoaOther;
 
-        // Quick Estimate helpers
-        function perSqftRange(arv){
-            if (arv >= 600000) return [125, 200]; // new build band
-            if (arv >= 500000) return [50, 70];
-            if (arv >= 300000) return [30, 60];
-            return [20, 40];
-        }
-        function showQuickBand(arv){
-            const b = document.getElementById('quickBand');
-            if (!b) return;
-            let lo=20, hi=40;
-            if (arv>=600000){ lo=125; hi=200; }
-            else if (arv>=500000){ lo=50; hi=70; }
-            else if (arv>=300000){ lo=30; hi=60; }
-            b.textContent = `Quick band: $${lo}–$${hi} per sq ft`;
-        }
+      // Sale costs
+      const realtorCommission = arv * ((parseFloat(document.getElementById('realtorCommission').value) || 6) / 100);
+      const closingCostsPercent = arv * ((parseFloat(document.getElementById('closingCosts').value) || 2) / 100);
+      const stagingCosts = parseFloat(document.getElementById('stagingCosts').value) || 2000;
+      const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
+      const totalSaleCosts = realtorCommission + closingCostsPercent + stagingCosts + otherCosts;
 
-        // Age-based suggestions
-        const ageSuggestMap = [
-          {input:'lu-roof', label:'Roof', repairId:'roof-replace'},
-          {input:'lu-hvac', label:'HVAC', repairId:'hvac-new'},
-          {input:'lu-plumb', label:'Plumbing Under House', repairId:'plumbing-under'},
-          {input:'lu-elec', label:'Electrical Panel', repairId:'electrical-panel'},
-          {input:'lu-win', label:'Windows', repairId:'windows-replace'}
-        ];
-        function yearsOldFromInput(id){
-          const v = document.getElementById(id)?.value;
-          if (!/^\d{4}$/.test(v)) return null;
-          const y = Number(v);
-          const now = new Date().getFullYear();
-          return now - y;
-        }
-        function ensureSelected(id){
-          if (!selectedRepairs.includes(id)){
-            selectedRepairs.push(id);
-            const el = document.getElementById('repair-'+id);
-            if (el){
-              el.classList.add('selected','glow');
-              const dot = el.querySelector('.w-3');
-              if (dot){ dot.style.opacity='1'; dot.style.transform='scale(1)'; }
-            }
-          }
-        }
-        function updateAgeSuggestions(){
-          const wrap = document.getElementById('ageSuggestions');
-          if (!wrap) return;
-          const over = [];
-          ageSuggestMap.forEach(m=>{
-            const yrs = yearsOldFromInput(m.input);
-            if (yrs!=null && yrs > 14) over.push({...m, yrs});
-          });
-          if (over.length===0){
-            wrap.innerHTML = '';
-            return;
-          }
-          const chips = over.map(m=>{
-            return `<button class="px-3 py-1 mr-2 mb-2 bg-yellow-100 hover:bg-yellow-200 rounded-full"
-              onclick="ensureSelected('${m.repairId}'); updateRepairTotal(); calculateDeal()">
-              Suggest: Replace ${m.label} (${m.yrs} yrs)
-            </button>`;
-          }).join('');
-          wrap.innerHTML = `<div class="text-gray-700">Age signals found. Click to add:</div><div class="mt-2">${chips}</div>`;
-        }
+      // Totals
+      const totalInvestment = purchasePrice + totalRepairCosts + totalHoldingCosts + totalSaleCosts + totalFinancingCosts;
+      const netProfit = arv - totalInvestment;
+      const roi = cashNeeded > 0 ? (netProfit / cashNeeded) * 100 : 0;
+      const cashOnCash = totalInvestment > 0 ? (netProfit / totalInvestment) * 100 : 0;
 
-        // Risk bump if two or more majors are 2010 or older
-        function ageRiskBump(){
-            const ids = ['lu-roof','lu-elec','lu-plumb','lu-hvac','lu-win','lu-extpaint'];
-            const old = ids.map(id => document.getElementById(id)?.value)
-                           .filter(v => /^\d{4}$/.test(v) && Number(v) <= 2010).length;
-            return old >= 2 ? 1.10 : 1.00;
-        }
+      // Animate numbers
+      animateNumber('profit', Math.round(netProfit), true);
+      animateNumber('roi', Math.round(roi));
+      animateNumber('cashOnCash', Math.round(cashOnCash));
+      animateNumber('cashNeeded', Math.round(cashNeeded), true);
 
-        function calculateDeal() {
-            const purchasePrice = parseFloat(document.getElementById('purchase-price').value) || 0;
-            const arv = parseFloat(document.getElementById('arv').value) || 0;
-            const sqft = parseFloat(document.getElementById('sqft').value) || 0;
-            const projectTimeline = parseFloat(document.getElementById('projectTimeline').value) || 6;
+      // Deal quality
+      let dealQuality = 'POOR DEAL';
+      let dealClass = 'text-red-600';
+      let dealIcon = '😟';
+      let dealMessage = quick ? 'Quick mode uses per sq ft band' : 'Detailed mode uses line items and qty';
+      if (roi >= 50){ dealQuality='EXCELLENT DEAL'; dealClass='text-green-600'; dealIcon='🎉'; dealMessage+=' Strong ROI.'; }
+      else if (roi >= 30){ dealQuality='GOOD DEAL'; dealClass='text-blue-600'; dealIcon='😊'; dealMessage+=' Solid returns.'; }
+      else if (roi >= 15){ dealQuality='FAIR DEAL'; dealClass='text-yellow-600'; dealIcon='🤔'; dealMessage+=' Negotiate price.'; }
 
-            showQuickBand(arv);
+      const dealQualityEl = document.getElementById('dealQuality');
+      const dealIconEl = document.getElementById('dealQualityIcon');
+      const dealMessageEl = document.getElementById('dealMessage');
+      dealQualityEl.style.opacity='0'; dealIconEl.style.opacity='0'; dealMessageEl.style.opacity='0';
+      setTimeout(()=>{
+        dealQualityEl.textContent=dealQuality;
+        dealQualityEl.className=`text-4xl font-bold mb-3 ${dealClass}`;
+        dealIconEl.textContent=dealIcon;
+        dealMessageEl.textContent=dealMessage;
+        dealQualityEl.style.opacity='1'; dealIconEl.style.opacity='1'; dealMessageEl.style.opacity='1';
+        dealQualityEl.classList.add('success-pulse'); dealIconEl.classList.add('bounce');
+        setTimeout(()=>{ dealQualityEl.classList.remove('success-pulse'); dealIconEl.classList.remove('bounce'); },1000);
+      },300);
 
-            if (!purchasePrice || !arv) {
-                document.getElementById('analysisCard').style.display = 'block';
-                document.getElementById('resultsCard').style.display = 'none';
-                return;
-            }
+      // Tabs
+      updateBreakdown(purchasePrice, arv, totalRepairCosts, totalHoldingCosts, totalSaleCosts, totalFinancingCosts, netProfit);
+      updateCashFlow(purchasePrice, totalRepairCosts, monthlyPayment, projectTimeline, arv, totalSaleCosts);
+      updateComparison(purchasePrice, arv, totalRepairCosts, totalHoldingCosts, totalSaleCosts);
+    }
 
-            document.getElementById('analysisCard').style.display = 'none';
-            document.getElementById('resultsCard').style.display = 'block';
+    function updateBreakdown(purchasePrice, arv, repairs, holding, sale, financing, profit){
+      document.getElementById('breakdown').innerHTML = `
+        <div class="glass-dark p-6 rounded-2xl">
+          <h4 class="font-bold text-gray-800 mb-4 text-xl">Investment Breakdown</h4>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">Purchase Price</span><span class="font-bold text-lg">$${purchasePrice.toLocaleString()}</span></div>
+            <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">Repair Costs</span><span class="font-bold text-orange-600 text-lg">$${repairs.toLocaleString()}</span></div>
+            <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">Holding Costs</span><span class="font-bold text-red-600 text-lg">$${holding.toLocaleString()}</span></div>
+            <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">Financing Costs</span><span class="font-bold text-red-600 text-lg">$${financing.toLocaleString()}</span></div>
+            <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">Sale Costs</span><span class="font-bold text-red-600 text-lg">$${sale.toLocaleString()}</span></div>
+            <div class="flex justify-between items-center pt-3 border-t-2 border-gray-300"><span class="text-gray-700 font-bold text-lg">Total Investment</span><span class="font-bold text-gray-900 text-xl">$${(purchasePrice + repairs + holding + sale + financing).toLocaleString()}</span></div>
+          </div>
+        </div>
+        <div class="bg-gradient-to-br from-green-50 to-lime-50 p-6 rounded-2xl border border-green-200 mt-4">
+          <h4 class="font-bold text-gray-800 mb-4 text-xl">Profit Analysis</h4>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">After Repair Value</span><span class="font-bold text-lg">$${arv.toLocaleString()}</span></div>
+            <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">Total Investment</span><span class="font-bold text-red-600 text-lg">-$${(purchasePrice + repairs + holding + sale + financing).toLocaleString()}</span></div>
+            <div class="flex justify-between items-center pt-3 border-t-2 border-green-300"><span class="text-gray-700 font-bold text-lg">Net Profit</span><span class="font-bold text-green-700 text-2xl">$${profit.toLocaleString()}</span></div>
+          </div>
+        </div>
+      `;
+    }
 
-            // Quick vs Detailed repair
-            const quick = document.getElementById('quickMode')?.checked;
-            let totalRepairCosts = 0;
-            if (quick){
-                const [lo, hi] = perSqftRange(arv);
-                totalRepairCosts = sqft ? Math.round(sqft * ((lo + hi) / 2)) : 0;
-            } else {
-                totalRepairCosts = selectedRepairs.reduce((t,id)=>{
-                    const r = repairOptions.find(x=>x.id===id);
-                    return t + (r ? lineAvg(r) : 0);
-                },0);
-            }
-            // risk bump for older majors
-            totalRepairCosts = Math.round(totalRepairCosts * ageRiskBump());
+    function updateCashFlow(purchase, repairs, monthlyPayment, months, arv, saleCosts){
+      const monthlyHolding = (parseFloat(document.getElementById('propertyTax').value) || 350)
+                           + (parseFloat(document.getElementById('insurance').value) || 200)
+                           + (parseFloat(document.getElementById('utilities').value) || 150)
+                           + (parseFloat(document.getElementById('hoaOther').value) || 0);
+      let cashFlowHTML = '<h4 class="font-bold text-gray-800 mb-6 text-xl">Monthly Cash Flow Timeline</h4><div class="space-y-4">';
+      let totalOutflow = 0;
 
-            // Financing
-            let cashNeeded = 0;
-            let totalFinancingCosts = 0;
-            let monthlyPayment = 0;
-            if (useFinancing) {
-                const downPaymentPercent = parseFloat(document.getElementById('downPayment').value) || 10;
-                const interestRate = parseFloat(document.getElementById('interestRate').value) || 12;
-                const loanPoints = parseFloat(document.getElementById('loanPoints').value) || 2;
-                const loanTerm = parseFloat(document.getElementById('loanTerm').value) || 12;
+      const downPct = parseFloat(document.getElementById('downPayment').value) || 10;
+      totalOutflow += useFinancing ? (purchase * (downPct/100)) : purchase;
+      cashFlowHTML += `
+        <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-2xl border border-blue-200 transform hover:scale-105 transition-all">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-lg">Month 0 - Closing</span>
+            <span class="font-bold text-red-600 text-xl">-$${totalOutflow.toLocaleString()}</span>
+          </div>
+        </div>
+      `;
 
-                const downPayment = purchasePrice * (downPaymentPercent / 100);
-                const loanAmount = purchasePrice - downPayment + totalRepairCosts;
-                const monthlyInterestRate = interestRate / 100 / 12;
-                monthlyPayment = Math.round(loanAmount * monthlyInterestRate); // interest-only
-                const totalInterest = monthlyPayment * projectTimeline;
-                const pointsCost = loanAmount * (loanPoints / 100);
+      for (let i = 1; i <= months; i++){
+        const monthlyOut = monthlyHolding + monthlyPayment + (i <= 3 ? repairs / 3 : 0);
+        totalOutflow += monthlyOut;
+        cashFlowHTML += `
+          <div class="glass-dark p-4 rounded-2xl transform hover:scale-105 transition-all">
+            <div class="flex justify-between items-center">
+              <span class="font-semibold">Month ${i}</span>
+              <span class="font-bold text-red-600 text-lg">-$${monthlyOut.toLocaleString()}</span>
+            </div>
+            <div class="text-sm text-gray-600 mt-2">
+              Holding: $${monthlyHolding.toLocaleString()} | ${useFinancing ? `Interest: $${monthlyPayment.toLocaleString()} | ` : ''}${i <= 3 ? `Repairs: $${(repairs / 3).toLocaleString()}` : ''}
+            </div>
+          </div>
+        `;
+      }
 
-                totalFinancingCosts = totalInterest + pointsCost;
-                cashNeeded = downPayment + pointsCost;
+      const payoff = useFinancing ? ((purchase * (1 - (parseFloat(document.getElementById('downPayment').value)||10)/100)) + repairs) : 0;
+      cashFlowHTML += `
+        <div class="bg-gradient-to-r from-green-50 to-lime-50 p-5 rounded-2xl border border-green-200 transform hover:scale-105 transition-all">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-lg">Sale Proceeds</span>
+            <span class="font-bold text-green-700 text-2xl">+$${arv.toLocaleString()}</span>
+          </div>
+          <div class="text-sm text-gray-600 mt-2">
+            Sale costs: -$${saleCosts.toLocaleString()} ${useFinancing ? `| Loan payoff: -$${payoff.toLocaleString()}` : ''}
+          </div>
+        </div>
+        <div class="bg-gradient-to-r from-yellow-50 to-amber-50 p-6 rounded-2xl border border-yellow-300 mt-6">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-lg">Total Cash Invested</span>
+            <span class="font-bold text-xl">$${totalOutflow.toLocaleString()}</span>
+          </div>
+          <div class="flex justify-between items-center mt-3">
+            <span class="font-bold text-lg">Net Cash Return</span>
+            <span class="font-bold text-green-700 text-2xl">$${(arv - saleCosts - totalOutflow - payoff).toLocaleString()}</span>
+          </div>
+        </div>
+      `;
+      cashFlowHTML += '</div>';
+      document.getElementById('cashflowTimeline').innerHTML = cashFlowHTML;
+    }
 
-                const loanAmountEl = document.getElementById('loanAmount');
-                const monthlyPaymentEl = document.getElementById('monthlyPayment');
-                loanAmountEl.classList.add('updating');
-                monthlyPaymentEl.classList.add('updating');
-                setTimeout(() => {
-                    loanAmountEl.textContent = `$${loanAmount.toLocaleString()}`;
-                    monthlyPaymentEl.textContent = `$${monthlyPayment.toLocaleString()}`;
-                    loanAmountEl.classList.remove('updating');
-                    monthlyPaymentEl.classList.remove('updating');
-                }, 300);
-            } else {
-                cashNeeded = purchasePrice + totalRepairCosts;
-            }
+    function updateComparison(purchase, arv, repairs, holding, saleCosts){
+      const cashInvestment = purchase + repairs;
+      const cashProfit = arv - cashInvestment - holding - saleCosts;
+      const cashROI = (cashProfit / cashInvestment) * 100;
 
-            // Holding costs
-            const propertyTax = (parseFloat(document.getElementById('propertyTax').value) || 350) * projectTimeline;
-            const insurance = (parseFloat(document.getElementById('insurance').value) || 200) * projectTimeline;
-            const utilities = (parseFloat(document.getElementById('utilities').value) || 150) * projectTimeline;
-            const hoaOther = (parseFloat(document.getElementById('hoaOther').value) || 0) * projectTimeline;
-            const totalHoldingCosts = propertyTax + insurance + utilities + hoaOther;
+      const downPct = parseFloat(document.getElementById('downPayment').value) || 10;
+      const downPayment = purchase * (downPct/100);
+      const loanAmount = purchase * (1 - downPct/100) + repairs;
+      const interestRate = (parseFloat(document.getElementById('interestRate').value)||12)/100;
+      const projectMonths = parseFloat(document.getElementById('projectTimeline').value) || 6;
+      const totalInterest = loanAmount * (interestRate/12) * projectMonths;
+      const pointsCost = loanAmount * ((parseFloat(document.getElementById('loanPoints').value)||2)/100);
+      const financedInvestment = downPayment + pointsCost;
+      const financedProfit = arv - purchase - repairs - holding - saleCosts - totalInterest - pointsCost;
+      const financedROI = (financedProfit / financedInvestment) * 100;
 
-            // Sale costs
-            const realtorCommission = arv * ((parseFloat(document.getElementById('realtorCommission').value) || 6) / 100);
-            const closingCostsPercent = arv * ((parseFloat(document.getElementById('closingCosts').value) || 2) / 100);
-            const stagingCosts = parseFloat(document.getElementById('stagingCosts').value) || 2000;
-            const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
-            const totalSaleCosts = realtorCommission + closingCostsPercent + stagingCosts + otherCosts;
+      document.getElementById('comparisonAnalysis').innerHTML = `
+        <h4 class="font-bold text-gray-800 mb-6 text-xl">Cash Purchase vs Financing Comparison</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl border border-blue-200 transform hover:scale-105 transition-all">
+            <h5 class="font-bold text-blue-900 mb-4 text-lg">💵 Cash Purchase</h5>
+            <div class="space-y-3">
+              <div class="flex justify-between"><span class="font-medium">Cash Needed:</span><span class="font-bold text-lg">$${cashInvestment.toLocaleString()}</span></div>
+              <div class="flex justify-between"><span class="font-medium">Net Profit:</span><span class="font-bold text-green-700 text-lg">$${cashProfit.toLocaleString()}</span></div>
+              <div class="flex justify-between"><span class="font-medium">ROI:</span><span class="font-bold text-blue-700 text-xl">${cashROI.toFixed(1)}%</span></div>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl border border-green-200 transform hover:scale-105 transition-all">
+            <h5 class="font-bold text-green-900 mb-4 text-lg">🏦 Financed</h5>
+            <div class="space-y-3">
+              <div class="flex justify-between"><span class="font-medium">Cash Needed:</span><span class="font-bold text-lg">$${financedInvestment.toLocaleString()}</span></div>
+              <div class="flex justify-between"><span class="font-medium">Net Profit:</span><span class="font-bold text-green-700 text-lg">$${financedProfit.toLocaleString()}</span></div>
+              <div class="flex justify-between"><span class="font-medium">ROI:</span><span class="font-bold text-green-700 text-xl">${financedROI.toFixed(1)}%</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gradient-to-r from-yellow-50 to-amber-50 p-6 rounded-2xl border border-yellow-300 mt-6">
+          <h5 class="font-bold text-gray-800 mb-4 text-lg">📊 Key Insights</h5>
+          <ul class="space-y-2 text-gray-700">
+            <li class="flex items-center"><span class="text-2xl mr-3">${financedROI > cashROI ? '✅' : '❌'}</span>Financing ${financedROI > cashROI ? 'raises' : 'lowers'} ROI by ${Math.abs(financedROI - cashROI).toFixed(1)}%</li>
+            <li class="flex items-center"><span class="text-2xl mr-3">💰</span>Cash purchase avoids $${(totalInterest + pointsCost).toLocaleString()} in financing cost</li>
+            <li class="flex items-center"><span class="text-2xl mr-3">📉</span>Financing needs ${((cashInvestment - financedInvestment) / cashInvestment * 100).toFixed(0)}% less upfront cash</li>
+            <li class="flex items-center"><span class="text-2xl mr-3">🎯</span>Break even ARV: $${(purchase + repairs + holding + saleCosts + (useFinancing ? totalInterest + pointsCost : 0)).toLocaleString()}</li>
+          </ul>
+        </div>
+      `;
+    }
 
-            // Totals
-            const totalInvestment = purchasePrice + totalRepairCosts + totalHoldingCosts + totalSaleCosts + totalFinancingCosts;
-            const netProfit = arv - totalInvestment;
-            const roi = cashNeeded > 0 ? (netProfit / cashNeeded) * 100 : 0;
-            const cashOnCash = totalInvestment > 0 ? (netProfit / totalInvestment) * 100 : 0;
+    function resetAnalysis(){
+      document.getElementById('address').value = '';
+      document.getElementById('sqft').value = '';
+      document.getElementById('beds-baths').value = '';
+      document.getElementById('purchase-price').value = '';
+      document.getElementById('arv').value = '';
+      document.getElementById('projectTimeline').value = '6';
+      document.getElementById('timelineDisplay').textContent = '6 months';
+      document.getElementById('timelineFill').style.width = '25%';
+      selectedRepairs = [];
+      quantities = {};
+      initRepairOptions();
+      updateRepairTotal();
+      document.getElementById('analysisCard').style.display='block';
+      document.getElementById('resultsCard').style.display='none';
+      updateAgeSuggestions();
+      showQuickBand(parseFloat(document.getElementById('arv').value) || 0);
+    }
 
-            // Animate numbers
-            animateNumber('profit', Math.round(netProfit), true);
-            animateNumber('roi', Math.round(roi));
-            animateNumber('cashOnCash', Math.round(cashOnCash));
-            animateNumber('cashNeeded', Math.round(cashNeeded), true);
+    // Email with fallback
+    function emailResults(){
+      const address = document.getElementById('address').value || 'Property Address Not Specified';
+      const purchasePrice = document.getElementById('purchase-price').value || '0';
+      const arv = document.getElementById('arv').value || '0';
+      const profit = document.getElementById('profit').textContent || '$0';
+      const roi = document.getElementById('roi').textContent || '0%';
+      const cashOnCash = document.getElementById('cashOnCash').textContent || '0%';
+      const cashNeeded = document.getElementById('cashNeeded').textContent || '$0';
+      const dealQuality = document.getElementById('dealQuality').textContent || 'Deal';
+      const quick = document.getElementById('quickMode')?.checked;
 
-            // Deal quality
-            let dealQuality = 'POOR DEAL';
-            let dealClass = 'text-red-600';
-            let dealIcon = '😟';
-            let dealMessage = quick ? 'Quick mode uses per sq ft sanity band.' : 'Detailed mode uses line items and qty.';
-            if (roi >= 50) { dealQuality = 'EXCELLENT DEAL'; dealClass = 'text-green-600'; dealIcon = '🎉'; dealMessage += ' Strong ROI.'; }
-            else if (roi >= 30) { dealQuality = 'GOOD DEAL'; dealClass = 'text-blue-600'; dealIcon = '😊'; dealMessage += ' Solid returns.'; }
-            else if (roi >= 15) { dealQuality = 'FAIR DEAL'; dealClass = 'text-yellow-600'; dealIcon = '🤔'; dealMessage += ' Negotiate price.'; }
+      const selectedRepairDetails = (window.selectedRepairs || []).map(repairId => {
+        const repair = (window.repairOptions || []).find(r => r.id === repairId);
+        const qty = repair?.unit ? ` x${(window.quantities || {})[repairId] || 1}` : '';
+        const lo = (repair?.typLow ?? repair?.min) || 0;
+        const hi = (repair?.typHigh ?? repair?.max) || 0;
+        return `${repair?.name || repairId}${qty}: $${lo.toLocaleString()} - $${hi.toLocaleString()}`;
+      }).join('\n');
 
-            const dealQualityEl = document.getElementById('dealQuality');
-            const dealIconEl = document.getElementById('dealQualityIcon');
-            const dealMessageEl = document.getElementById('dealMessage');
-            dealQualityEl.style.opacity = '0'; dealIconEl.style.opacity = '0'; dealMessageEl.style.opacity = '0';
-            setTimeout(() => {
-                dealQualityEl.textContent = dealQuality;
-                dealQualityEl.className = `text-4xl font-bold mb-3 ${dealClass}`;
-                dealIconEl.textContent = dealIcon;
-                dealMessageEl.textContent = dealMessage;
-                dealQualityEl.style.opacity = '1'; dealIconEl.style.opacity = '1'; dealMessageEl.style.opacity = '1';
-                dealQualityEl.classList.add('success-pulse'); dealIconEl.classList.add('bounce');
-                setTimeout(() => { dealQualityEl.classList.remove('success-pulse'); dealIconEl.classList.remove('bounce'); }, 1000);
-            }, 300);
-
-            // Tabs
-            updateBreakdown(purchasePrice, arv, totalRepairCosts, totalHoldingCosts, totalSaleCosts, totalFinancingCosts, netProfit);
-            updateCashFlow(purchasePrice, totalRepairCosts, monthlyPayment, projectTimeline, arv, totalSaleCosts);
-            updateComparison(purchasePrice, arv, totalRepairCosts, totalHoldingCosts, totalSaleCosts);
-        }
-
-        function updateBreakdown(purchasePrice, arv, repairs, holding, sale, financing, profit) {
-            document.getElementById('breakdown').innerHTML = `
-                <div class="glass-dark p-6 rounded-2xl">
-                    <h4 class="font-bold text-gray-800 mb-4 text-xl">Investment Breakdown</h4>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">Purchase Price</span><span class="font-bold text-lg">$${purchasePrice.toLocaleString()}</span></div>
-                        <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">Repair Costs</span><span class="font-bold text-orange-600 text-lg">$${repairs.toLocaleString()}</span></div>
-                        <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">Holding Costs</span><span class="font-bold text-red-600 text-lg">$${holding.toLocaleString()}</span></div>
-                        <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">Financing Costs</span><span class="font-bold text-red-600 text-lg">$${financing.toLocaleString()}</span></div>
-                        <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">Sale Costs</span><span class="font-bold text-red-600 text-lg">$${sale.toLocaleString()}</span></div>
-                        <div class="flex justify-between items-center pt-3 border-t-2 border-gray-300"><span class="text-gray-700 font-bold text-lg">Total Investment</span><span class="font-bold text-gray-900 text-xl">$${(purchasePrice + repairs + holding + sale + financing).toLocaleString()}</span></div>
-                    </div>
-                </div>
-                <div class="bg-gradient-to-br from-green-50 to-lime-50 p-6 rounded-2xl border border-green-200 mt-4">
-                    <h4 class="font-bold text-gray-800 mb-4 text-xl">Profit Analysis</h4>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">After Repair Value</span><span class="font-bold text-lg">$${arv.toLocaleString()}</span></div>
-                        <div class="flex justify-between items-center"><span class="text-gray-700 font-medium">Total Investment</span><span class="font-bold text-red-600 text-lg">-$${(purchasePrice + repairs + holding + sale + financing).toLocaleString()}</span></div>
-                        <div class="flex justify-between items-center pt-3 border-t-2 border-green-300"><span class="text-gray-700 font-bold text-lg">Net Profit</span><span class="font-bold text-green-700 text-2xl">$${profit.toLocaleString()}</span></div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function updateCashFlow(purchase, repairs, monthlyPayment, months, arv, saleCosts) {
-            const monthlyHolding = (parseFloat(document.getElementById('propertyTax').value) || 350) +
-                                 (parseFloat(document.getElementById('insurance').value) || 200) +
-                                 (parseFloat(document.getElementById('utilities').value) || 150) +
-                                 (parseFloat(document.getElementById('hoaOther').value) || 0);
-            let cashFlowHTML = '<h4 class="font-bold text-gray-800 mb-6 text-xl">Monthly Cash Flow Timeline</h4><div class="space-y-4">';
-            let totalOutflow = 0;
-
-            const downPct = parseFloat(document.getElementById('downPayment').value) || 10;
-            totalOutflow += useFinancing ? (purchase * (downPct/100)) : purchase;
-            cashFlowHTML += `
-                <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-2xl border border-blue-200 transform hover:scale-105 transition-all">
-                    <div class="flex justify-between items-center">
-                        <span class="font-bold text-lg">Month 0 - Closing</span>
-                        <span class="font-bold text-red-600 text-xl">-$${totalOutflow.toLocaleString()}</span>
-                    </div>
-                </div>
-            `;
-
-            for (let i = 1; i <= months; i++) {
-                const monthlyOut = monthlyHolding + monthlyPayment + (i <= 3 ? repairs / 3 : 0);
-                totalOutflow += monthlyOut;
-                cashFlowHTML += `
-                    <div class="glass-dark p-4 rounded-2xl transform hover:scale-105 transition-all">
-                        <div class="flex justify-between items-center">
-                            <span class="font-semibold">Month ${i}</span>
-                            <span class="font-bold text-red-600 text-lg">-$${monthlyOut.toLocaleString()}</span>
-                        </div>
-                        <div class="text-sm text-gray-600 mt-2">
-                            Holding: $${monthlyHolding.toLocaleString()} | ${useFinancing ? `Interest: $${monthlyPayment.toLocaleString()} | ` : ''}${i <= 3 ? `Repairs: $${(repairs / 3).toLocaleString()}` : ''}
-                        </div>
-                    </div>
-                `;
-            }
-
-            const payoff = useFinancing ? ((purchase * (1 - (parseFloat(document.getElementById('downPayment').value)||10)/100)) + repairs) : 0;
-            cashFlowHTML += `
-                <div class="bg-gradient-to-r from-green-50 to-lime-50 p-5 rounded-2xl border border-green-200 transform hover:scale-105 transition-all">
-                    <div class="flex justify-between items-center">
-                        <span class="font-bold text-lg">Sale Proceeds</span>
-                        <span class="font-bold text-green-700 text-2xl">+$${arv.toLocaleString()}</span>
-                    </div>
-                    <div class="text-sm text-gray-600 mt-2">
-                        Sale costs: -$${saleCosts.toLocaleString()} ${useFinancing ? `| Loan payoff: -$${payoff.toLocaleString()}` : ''}
-                    </div>
-                </div>
-                <div class="bg-gradient-to-r from-yellow-50 to-amber-50 p-6 rounded-2xl border border-yellow-300 mt-6">
-                    <div class="flex justify-between items-center">
-                        <span class="font-bold text-lg">Total Cash Invested</span>
-                        <span class="font-bold text-xl">$${totalOutflow.toLocaleString()}</span>
-                    </div>
-                    <div class="flex justify-between items-center mt-3">
-                        <span class="font-bold text-lg">Net Cash Return</span>
-                        <span class="font-bold text-green-700 text-2xl">$${(arv - saleCosts - totalOutflow - payoff).toLocaleString()}</span>
-                    </div>
-                </div>
-            `;
-            cashFlowHTML += '</div>';
-            document.getElementById('cashflowTimeline').innerHTML = cashFlowHTML;
-        }
-
-        function updateComparison(purchase, arv, repairs, holding, saleCosts) {
-            const cashInvestment = purchase + repairs;
-            const cashProfit = arv - cashInvestment - holding - saleCosts;
-            const cashROI = (cashProfit / cashInvestment) * 100;
-
-            const downPct = parseFloat(document.getElementById('downPayment').value) || 10;
-            const downPayment = purchase * (downPct/100);
-            const loanAmount = purchase * (1 - downPct/100) + repairs;
-            const interestRate = (parseFloat(document.getElementById('interestRate').value)||12)/100;
-            const projectMonths = parseFloat(document.getElementById('projectTimeline').value) || 6;
-            const totalInterest = loanAmount * (interestRate/12) * projectMonths;
-            const pointsCost = loanAmount * ((parseFloat(document.getElementById('loanPoints').value)||2)/100);
-            const financedInvestment = downPayment + pointsCost;
-            const financedProfit = arv - purchase - repairs - holding - saleCosts - totalInterest - pointsCost;
-            const financedROI = (financedProfit / financedInvestment) * 100;
-
-            document.getElementById('comparisonAnalysis').innerHTML = `
-                <h4 class="font-bold text-gray-800 mb-6 text-xl">Cash Purchase vs Financing Comparison</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl border border-blue-200 transform hover:scale-105 transition-all">
-                        <h5 class="font-bold text-blue-900 mb-4 text-lg">💵 Cash Purchase</h5>
-                        <div class="space-y-3">
-                            <div class="flex justify-between"><span class="font-medium">Cash Needed:</span><span class="font-bold text-lg">$${cashInvestment.toLocaleString()}</span></div>
-                            <div class="flex justify-between"><span class="font-medium">Net Profit:</span><span class="font-bold text-green-700 text-lg">$${cashProfit.toLocaleString()}</span></div>
-                            <div class="flex justify-between"><span class="font-medium">ROI:</span><span class="font-bold text-blue-700 text-xl">${cashROI.toFixed(1)}%</span></div>
-                        </div>
-                    </div>
-                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl border border-green-200 transform hover:scale-105 transition-all">
-                        <h5 class="font-bold text-green-900 mb-4 text-lg">🏦 Financed</h5>
-                        <div class="space-y-3">
-                            <div class="flex justify-between"><span class="font-medium">Cash Needed:</span><span class="font-bold text-lg">$${financedInvestment.toLocaleString()}</span></div>
-                            <div class="flex justify-between"><span class="font-medium">Net Profit:</span><span class="font-bold text-green-700 text-lg">$${financedProfit.toLocaleString()}</span></div>
-                            <div class="flex justify-between"><span class="font-medium">ROI:</span><span class="font-bold text-green-700 text-xl">${financedROI.toFixed(1)}%</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gradient-to-r from-yellow-50 to-amber-50 p-6 rounded-2xl border border-yellow-300 mt-6">
-                    <h5 class="font-bold text-gray-800 mb-4 text-lg">📊 Key Insights</h5>
-                    <ul class="space-y-2 text-gray-700">
-                        <li class="flex items-center"><span class="text-2xl mr-3">${financedROI > cashROI ? '✅' : '❌'}</span>Financing ${financedROI > cashROI ? 'raises' : 'lowers'} ROI by ${Math.abs(financedROI - cashROI).toFixed(1)}%</li>
-                        <li class="flex items-center"><span class="text-2xl mr-3">💰</span>Cash purchase avoids $${(totalInterest + pointsCost).toLocaleString()} in financing cost</li>
-                        <li class="flex items-center"><span class="text-2xl mr-3">📉</span>Financing needs ${((cashInvestment - financedInvestment) / cashInvestment * 100).toFixed(0)}% less upfront cash</li>
-                        <li class="flex items-center"><span class="text-2xl mr-3">🎯</span>Break-even ARV: $${(purchase + repairs + holding + saleCosts + (useFinancing ? totalInterest + pointsCost : 0)).toLocaleString()}</li>
-                    </ul>
-                </div>
-            `;
-        }
-
-        function resetAnalysis() {
-            document.getElementById('address').value = '';
-            document.getElementById('sqft').value = '';
-            document.getElementById('beds-baths').value = '';
-            document.getElementById('purchase-price').value = '';
-            document.getElementById('arv').value = '';
-            document.getElementById('projectTimeline').value = '6';
-            document.getElementById('timelineDisplay').textContent = '6 months';
-            document.getElementById('timelineFill').style.width = '25%';
-            selectedRepairs = [];
-            quantities = {};
-            initRepairOptions();
-            updateRepairTotal();
-            document.getElementById('analysisCard').style.display = 'block';
-            document.getElementById('resultsCard').style.display = 'none';
-            updateAgeSuggestions();
-            showQuickBand(parseFloat(document.getElementById('arv').value) || 0);
-        }
-
-        function emailResults() {
-            const address = document.getElementById('address').value || 'Property Address Not Specified';
-            const purchasePrice = document.getElementById('purchase-price').value || '0';
-            const arv = document.getElementById('arv').value || '0';
-            const profit = document.getElementById('profit').textContent;
-            const roi = document.getElementById('roi').textContent;
-            const cashOnCash = document.getElementById('cashOnCash').textContent;
-            const cashNeeded = document.getElementById('cashNeeded').textContent;
-            const dealQuality = document.getElementById('dealQuality').textContent;
-            const quick = document.getElementById('quickMode')?.checked;
-
-            const selectedRepairDetails = selectedRepairs.map(repairId => {
-                const repair = repairOptions.find(r => r.id === repairId);
-                const qty = repair?.unit ? ` x${quantities[repairId] || 1}` : '';
-                return `${repair.name}${qty}: $${(repair.typLow ?? repair.min).toLocaleString()} - $${(repair.typHigh ?? repair.max).toLocaleString()}`;
-            }).join('\n');
-
-            const subject = `Deal Analysis: ${address} - ${dealQuality}`;
-            const body = `Professional Deal Analysis Report
+      const recipients = 'james@proverbs31landsphere.com,lawanda@proverbs31landsphere.com';
+      const subject = `Deal Analysis: ${address} - ${dealQuality}`;
+      const body =
+`Professional Deal Analysis Report
 Generated by Proverbs 31 LandSphere
 
 PROPERTY DETAILS:
 📍 Address: ${address}
 💰 Purchase Price: $${parseInt(purchasePrice).toLocaleString()}
-📈 After Repair Value (ARV): $${parseInt(arv).toLocaleString()}
+📈 After Repair Value, ARV: $${parseInt(arv).toLocaleString()}
 
 DEAL METRICS:
 ${dealQuality}
@@ -1062,64 +1043,91 @@ ${dealQuality}
 💸 Cash Needed: ${cashNeeded}
 
 REPAIR ESTIMATES:
-Mode: ${quick ? 'Quick Estimate (per sq ft)' : 'Detailed (line items)'}
+Mode: ${quick ? 'Quick Estimate, per sq ft' : 'Detailed, line items'}
 Total Repair Cost: ${document.getElementById('repairTotal').textContent}
 
 Selected Repairs:
 ${selectedRepairDetails || 'No repairs selected'}
 
 FINANCING:
-${useFinancing ? 'Using Hard Money Loan' : 'Cash Purchase'}
-${useFinancing ? `Loan Amount: ${document.getElementById('loanAmount').textContent}` : ''}
-${useFinancing ? `Monthly Payment: ${document.getElementById('monthlyPayment').textContent}` : ''}
+${window.useFinancing ? 'Using Hard Money Loan' : 'Cash Purchase'}
+${window.useFinancing ? `Loan Amount: ${document.getElementById('loanAmount').textContent}` : ''}
+${window.useFinancing ? `Monthly Payment: ${document.getElementById('monthlyPayment').textContent}` : ''}
 
 ---
 This analysis was generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
 Proverbs 31 LandSphere - Real Estate Investment Solutions`;
 
-            const recipients = 'james@proverbs31landsphere.com,lawanda@proverbs31landsphere.com';
-            const mailtoLink = `mailto:${recipients}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoLink;
+      const mailtoLink = `mailto:${encodeURIComponent(recipients)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      // Try mailto handoff
+      try{
+        const a = document.createElement('a');
+        a.href = mailtoLink;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }catch(e){}
+
+      // Fallback if still on page
+      setTimeout(()=>{
+        if (document.visibilityState === 'visible'){
+          showFallback(recipients, subject, body);
         }
+      },800);
+    }
 
-        // Init
-        function setInitialSliderFills(){
-            document.getElementById('downPaymentFill').style.width = `${(parseFloat(document.getElementById('downPayment').value)/30)*100}%`;
-            document.getElementById('interestRateFill').style.width = `${((parseFloat(document.getElementById('interestRate').value)-8)/10)*100}%`;
-            document.getElementById('timelineFill').style.width = '25%';
-        }
+    // Fallback helpers
+    function showFallback(to, subject, body){
+      document.getElementById('fb-to').value = to;
+      document.getElementById('fb-subject').value = subject;
+      document.getElementById('fb-body').value = body;
+      const modal = document.getElementById('emailFallback');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    function hideFallback(){
+      const modal = document.getElementById('emailFallback');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+    function copyFallbackBody(){
+      const ta = document.getElementById('fb-body');
+      ta.select();
+      document.execCommand('copy');
+      alert('Body copied. Paste into your email.');
+    }
+    function downloadFallbackEML(){
+      const to = document.getElementById('fb-to').value;
+      const subject = document.getElementById('fb-subject').value;
+      const body = document.getElementById('fb-body').value;
+      const eml =
+`To: ${to}
+Subject: ${subject}
+Content-Type: text/plain; charset=UTF-8
 
-        initRepairOptions();
-        setInitialSliderFills();
-        updateAgeSuggestions();
-        showQuickBand(0);
-    </script>
-    <div id="emailFallback" class="fixed inset-0 hidden items-center justify-center bg-black/40">
-  <div class="glass w-[min(720px,92vw)] max-h-[90vh] overflow-auto rounded-2xl p-6">
-    <h3 class="text-xl font-bold mb-2">Email didn’t open</h3>
-    <p class="text-sm text-gray-600 mb-4">Copy the email body or download a .eml file, then send from your mail app.</p>
+${body}`;
+      const blob = new Blob([eml], {type:'message/rfc822'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Deal Analysis.eml';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
 
-    <div class="mb-3">
-      <label class="block text-xs font-semibold text-gray-600">To</label>
-      <input id="fb-to" class="modern-input w-full p-2 rounded-lg" readonly>
-    </div>
+    // Init
+    function setInitialSliderFills(){
+      document.getElementById('downPaymentFill').style.width = `${(parseFloat(document.getElementById('downPayment').value)/30)*100}%`;
+      document.getElementById('interestRateFill').style.width = `${((parseFloat(document.getElementById('interestRate').value)-8)/10)*100}%`;
+      document.getElementById('timelineFill').style.width = '25%';
+    }
 
-    <div class="mb-3">
-      <label class="block text-xs font-semibold text-gray-600">Subject</label>
-      <input id="fb-subject" class="modern-input w-full p-2 rounded-lg" readonly>
-    </div>
-
-    <div class="mb-4">
-      <label class="block text-xs font-semibold text-gray-600">Body</label>
-      <textarea id="fb-body" class="modern-input w-full p-3 rounded-lg h-60"></textarea>
-    </div>
-
-    <div class="flex gap-3">
-      <button onclick="copyFallbackBody()" class="btn-primary px-4 py-2 rounded-xl text-white font-bold">Copy body</button>
-      <button onclick="downloadFallbackEML()" class="px-4 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 font-bold">Download .eml</button>
-      <button onclick="hideFallback()" class="ml-auto px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 font-bold">Close</button>
-    </div>
-  </div>
-</div>
+    initRepairOptions();
+    setInitialSliderFills();
+    updateAgeSuggestions();
+    showQuickBand(0);
+  </script>
 </body>
 </html>
